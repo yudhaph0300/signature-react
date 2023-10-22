@@ -6,7 +6,6 @@ import { Link } from "react-router-dom";
 
 function Furniture() {
   const { furnitureData, deleteFurniture } = useContext(FurnitureContext);
-  console.log(furnitureData);
 
   const handleDelete = (id) => {
     const confirmDelete = window.confirm(
