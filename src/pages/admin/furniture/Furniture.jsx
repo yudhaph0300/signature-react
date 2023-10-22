@@ -1,37 +1,55 @@
-import "./style/index.css";
-import Sidebar from "../../components/admin/Sidebar";
+import "../style/index.css";
+import Sidebar from "../../../components/admin/Sidebar";
 import { useContext } from "react";
-import { FurnitureContext } from "../../data/FurnitureContext";
+import { FurnitureContext } from "../../../data/FurnitureContext";
+import { Link } from "react-router-dom";
 
 function Furniture() {
-  const { furnitureData } = useContext(FurnitureContext);
+  const { furnitureData, deleteFurniture } = useContext(FurnitureContext);
+  console.log(furnitureData);
+
+  const handleDelete = (id) => {
+    const confirmDelete = window.confirm(
+      "Are you sure you want to remove this furniture?"
+    );
+
+    if (confirmDelete) {
+      deleteFurniture(id);
+      alert("Furniture removed successfully!");
+    }
+  };
 
   return (
     <div>
       <Sidebar />
-      <div class="content">
-        <div class="card shadow border-0 p-3">
-          <div class="card-body">
+      <div className="content">
+        <div className="card shadow border-0 p-3">
+          <div className="card-body">
             <div className="d-flex justify-content-between mb-3">
               <div className="card-title">
                 <h3>Furniture</h3>
                 <p>Showing {furnitureData.length} furniture from all data</p>
               </div>
-              <div class="col ms-5">
+              <div className="col ms-5">
                 <input
                   type="text"
-                  class="form-control"
+                  className="form-control"
                   placeholder="Search..."
                   style={{ width: "100%" }}
                 />
               </div>
-              <div class="col ms-5">
-                <button className="btn btn-primary w-100">Add Furniture</button>
+              <div className="col ms-5">
+                <Link
+                  to="/admin/furniture/add"
+                  className="btn btn-primary w-100"
+                >
+                  Add Furniture
+                </Link>
               </div>
             </div>
-            <div class="table-responsive">
-              <table class="table table-hover">
-                <thead class="thead-light">
+            <div className="table-responsive">
+              <table className="table table-hover">
+                <thead className="thead-light">
                   <tr>
                     <th>No</th>
                     <th>Name</th>
@@ -50,15 +68,16 @@ function Furniture() {
                       <td>$ {furniture.price}</td>
                       <td>{furniture.rating}</td>
                       <td>
-                        <button
-                          type="button"
-                          class="btn btn-outline-info mr-2 rounded-pill px-4 me-2"
+                        <Link
+                          to={`/admin/furniture/edit/${furniture.id}`}
+                          className="btn btn-outline-info mr-2 rounded-pill px-4 me-2"
                         >
                           Edit
-                        </button>
+                        </Link>
                         <button
                           type="button"
-                          class="btn btn-outline-danger rounded-pill px-4"
+                          className="btn btn-outline-danger rounded-pill px-4"
+                          onClick={() => handleDelete(furniture.id)}
                         >
                           Delete
                         </button>

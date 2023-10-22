@@ -3,7 +3,7 @@ import "./style/sidebar.css";
 
 function Sidebar() {
   return (
-    <div class="sidebar">
+    <div className="sidebar">
       <Link to="/admin" className="link">
         Dashboard
       </Link>

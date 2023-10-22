@@ -22,8 +22,8 @@ function Furnitures() {
                     src="https://images.unsplash.com/photo-1567016432779-094069958ea5?auto=format&fit=crop&q=60&w=500&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxzZWFyY2h8NHx8c29mYXxlbnwwfHwwfHx8MA%3D%3D"
                     alt={furniture.name}
                   />
-                  <div class="card-img-overlay">
-                    <h5 class="card-title text-right w-100">
+                  <div className="card-img-overlay">
+                    <h5 className="card-title text-right w-100">
                       *{furniture.rating}
                     </h5>
                   </div>

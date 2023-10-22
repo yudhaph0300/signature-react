@@ -5,7 +5,7 @@ function Settings() {
   return (
     <div>
       <Sidebar />
-      <div class="content">
+      <div className="content">
         <h1>Settings</h1>
         <p>
           Lorem ipsum dolor sit amet consectetur adipisicing elit. Vero itaque

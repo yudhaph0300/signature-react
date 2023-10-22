@@ -8,25 +8,29 @@ import About from "./pages/About";
 import Furnitures from "./pages/Furnitures";
 
 import Index from "./pages/admin/Index";
-import Furniture from "./pages/admin/Furniture";
+import Furniture from "./pages/admin/furniture/Furniture";
 import Settings from "./pages/admin/Settings";
+import AddFurniture from "./pages/admin/furniture/AddFurniture";
+import EditFurniture from "./pages/admin/furniture/EditFurniture";
 
 function App() {
   return (
-    <Router>
-      <FurnitureProvider>
+    <FurnitureProvider>
+      <Router>
         <Routes>
           <Route path="/admin" element={<Index />} />
           <Route path="/admin/furniture" element={<Furniture />} />
           <Route path="/admin/settings" element={<Settings />} />
+          <Route path="/admin/furniture/add" element={<AddFurniture />} />
+          <Route path="/admin/furniture/edit/:id" element={<EditFurniture />} />
         </Routes>
         <Routes>
-          <Route path="/" element={<Home />} />
+          <Route path="/" exact element={<Home />} />
           <Route path="/about" element={<About />} />
           <Route path="/furnitures" element={<Furnitures />} />
         </Routes>
-      </FurnitureProvider>
-    </Router>
+      </Router>
+    </FurnitureProvider>
   );
 }
 
