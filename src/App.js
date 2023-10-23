@@ -13,6 +13,10 @@ import Settings from "./pages/admin/Settings";
 import AddFurniture from "./pages/admin/furniture/AddFurniture";
 import EditFurniture from "./pages/admin/furniture/EditFurniture";
 
+import "./app.css";
+import "./pages/style/home.css";
+import "./pages/style/furniture.css";
+
 function App() {
   return (
     <FurnitureProvider>

@@ -1,7 +1,8 @@
 import { Link } from "react-router-dom";
+
 function Navbar() {
   return (
-    <nav className="navbar navbar-expand-lg navbar-light bg-light">
+    <nav className="navbar navbar-expand-lg navbar-dark navbar-custom py-3">
       <div className="container">
         <Link to="/" className="navbar-brand">
           Signature
@@ -18,20 +19,25 @@ function Navbar() {
           <span className="navbar-toggler-icon"></span>
         </button>
         <div className="collapse navbar-collapse" id="navbarNavDropdown">
-          <ul className="navbar-nav">
-            <li className="nav-item">
+          <ul className="navbar-nav ms-auto">
+            <li className="nav-item me-3">
               <Link to="/" className="nav-link">
                 Home
               </Link>
             </li>
-            <li className="nav-item">
+            <li className="nav-item me-3">
               <Link to="/about" className="nav-link">
                 About
               </Link>
             </li>
-            <li className="nav-item">
+            <li className="nav-item me-5">
               <Link to="/furnitures" className="nav-link">
                 Furnitures
+              </Link>
+            </li>
+            <li className="nav-item">
+              <Link to="/furnitures" className="nav-link">
+                Readme
               </Link>
             </li>
           </ul>

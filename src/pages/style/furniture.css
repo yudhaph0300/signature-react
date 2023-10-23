@@ -1,0 +1,13 @@
+.card {
+   border: 0;
+   background-color: #F8F9FB;
+}
+
+.card-furniture {
+   cursor: pointer;
+}
+
+.fs-small{
+   font-size: 14px;
+   opacity: 80%;   
+}
