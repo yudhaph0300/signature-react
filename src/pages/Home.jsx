@@ -50,16 +50,20 @@ function Home() {
       </div>
 
       <div className="container furniture-recommended">
-        <h2 className="text-center fw-bold mb-5">
+        <h2 className="text-heading-rec text-center fw-bold">
           Featured furnitures recommended for you
         </h2>
-        <div className="d-flex justify-content-center">
+        <p className="text-heading-rec text-center">
+          Lorem ipsum dolor sit amet consectetur adipisicing elit. Voluptas
+          nesciunt sint deserunt ab voluptatem fugit deleniti culpa provident
+          quidem laboriosam!
+        </p>
+        <hr className="border mb-2" />
+
+        <div className="d-flex justify-content-center mt-4">
           <div className="row">
             {furnitureRec.map((furniture) => (
-              <div
-                className="col-sm-12 col-md-4 col-lg-3 mt-4"
-                key={furniture.id}
-              >
+              <div className="col-sm-12 col-md-4 col-lg-3" key={furniture.id}>
                 <div className="card card-furniture" onClick={handleClick}>
                   <div className="card-img-container">
                     <div className="card-img-overlay">

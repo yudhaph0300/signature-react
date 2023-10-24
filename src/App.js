@@ -16,6 +16,7 @@ import EditFurniture from "./pages/admin/furniture/EditFurniture";
 import "./app.css";
 import "./pages/style/home.css";
 import "./pages/style/furniture.css";
+import FurnituresResult from "./pages/FurnituresResult";
 
 function App() {
   return (
@@ -32,6 +33,10 @@ function App() {
           <Route path="/" exact element={<Home />} />
           <Route path="/about" element={<About />} />
           <Route path="/furnitures" element={<Furnitures />} />
+          <Route
+            path="/furnitures/result/:search"
+            element={<FurnituresResult />}
+          />
         </Routes>
       </Router>
     </FurnitureProvider>
