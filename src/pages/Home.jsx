@@ -3,6 +3,7 @@ import Navbar from "../components/Navbar";
 import Footer from "../components/Footer";
 import heroImage from "../asset/home-hero.png";
 import { FurnitureContext } from "../data/FurnitureContext";
+import SearchBar from "../components/SearchBar";
 
 function Home() {
   const [furnitureRec, setFurnitureRec] = useState(null);
@@ -17,6 +18,8 @@ function Home() {
 
     setFurnitureRec(randomFurniture);
   }, [furnitureData, furnitureRec]);
+
+  console.log(furnitureData);
 
   if (furnitureRec === null) {
     return <div>Loading...</div>;
@@ -36,16 +39,7 @@ function Home() {
             Search your best quality furniture...
           </p>
 
-          <div className="search-container mb-3 mx-auto w-50">
-            <input
-              type="text"
-              className="form-control rounded-pill search-input ms-2"
-              placeholder="Search for furniture..."
-            />
-            <button className="btn btn-primary rounded-pill search-button">
-              Search
-            </button>
-          </div>
+          <SearchBar />
         </div>
       </div>
 
@@ -74,7 +68,7 @@ function Home() {
                     <div className="card-img-wrapper">
                       <img
                         className="card-img-top"
-                        src="https://images.unsplash.com/photo-1567016432779-094069958ea5?auto=format&fit=crop&q=60&w=500&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxzZWFyY2h8NHx8c29mYXxlbnwwfHwwfHx8MA%3D%3D"
+                        src={furniture.img}
                         height="200"
                         alt={furniture.name}
                         style={{

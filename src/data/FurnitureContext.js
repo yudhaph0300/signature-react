@@ -7,6 +7,7 @@ const FurnitureData = [
   {
     id: uuidv4(),
     name: "Fabric Upholstered Dining Chair with Armrest",
+    img: "https://images.unsplash.com/photo-1567016432779-094069958ea5?auto=format&fit=crop&q=60&w=500&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxzZWFyY2h8NHx8c29mYXxlbnwwfHwwfHx8MA%3D%3D",
     type: "Dining Chair",
     price: 35,
     rating: 4.9,
@@ -16,6 +17,7 @@ const FurnitureData = [
   {
     id: uuidv4(),
     name: "White Vanity Table with Oval Mirror",
+    img: "https://images.unsplash.com/photo-1491926626787-62db157af940?auto=format&fit=crop&q=60&w=500&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxzZWFyY2h8MTl8fHNvZmF8ZW58MHx8MHx8fDA%3D",
     type: "Vanity Table",
     price: 28,
     rating: 4.5,
@@ -26,6 +28,7 @@ const FurnitureData = [
   {
     id: uuidv4(),
     name: "Leather Padded Bar Stool with Backrest",
+    img: "https://images.unsplash.com/photo-1630585308572-f53438fc684f?auto=format&fit=crop&q=60&w=500&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxzZWFyY2h8MjB8fHNvZmF8ZW58MHx8MHx8fDA%3D",
     type: "Bar Stool",
     price: 28,
     rating: 4,
@@ -35,6 +38,7 @@ const FurnitureData = [
   {
     id: uuidv4(),
     name: "Minimalist Wooden Bar Stool",
+    img: "https://images.unsplash.com/photo-1567016432779-094069958ea5?auto=format&fit=crop&q=60&w=500&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxzZWFyY2h8NHx8c29mYXxlbnwwfHwwfHx8MA%3D%3D",
     type: "Bar Stool",
     price: 20,
     rating: 5,
@@ -44,6 +48,7 @@ const FurnitureData = [
   {
     id: uuidv4(),
     name: "Minimalist Wooden Study Desk",
+    img: "https://images.unsplash.com/photo-1550254478-ead40cc54513?auto=format&fit=crop&q=60&w=500&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxzZWFyY2h8MjJ8fHNvZmF8ZW58MHx8MHx8fDA%3D",
     type: "Study Desk",
     price: 18,
     rating: 4.5,
@@ -53,6 +58,7 @@ const FurnitureData = [
   {
     id: uuidv4(),
     name: "Minimalist Shoe Rack with Drawers",
+    img: "https://plus.unsplash.com/premium_photo-1673014201688-8b74e5a60777?auto=format&fit=crop&q=60&w=500&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxzZWFyY2h8MjV8fHNvZmF8ZW58MHx8MHx8fDA%3D",
     type: "Shoe Rack",
     price: 12,
     rating: 4.5,
@@ -62,6 +68,7 @@ const FurnitureData = [
   {
     id: uuidv4(),
     name: "Solid Wood Modern Dining Chair",
+    img: "https://images.unsplash.com/photo-1603192399946-8bbb0703cfc4?auto=format&fit=crop&q=60&w=500&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxzZWFyY2h8MzF8fHNvZmF8ZW58MHx8MHx8fDA%3D",
     type: "Dining Chair",
     price: 30,
     rating: 4.7,
@@ -71,6 +78,7 @@ const FurnitureData = [
   {
     id: uuidv4(),
     name: "Teak Wood Wall-Mounted Shoe Rack",
+    img: "https://images.unsplash.com/photo-1636651430146-00b72284bfbb?auto=format&fit=crop&q=60&w=500&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxzZWFyY2h8MzB8fHNvZmF8ZW58MHx8MHx8fDA%3D",
     type: "Shoe Rack",
     price: 15,
     rating: 4.7,
@@ -80,6 +88,7 @@ const FurnitureData = [
   {
     id: uuidv4(),
     name: "Mahogany Vanity Table with Armchair",
+    img: "https://images.unsplash.com/photo-1606744837616-56c9a5c6a6eb?auto=format&fit=crop&q=60&w=500&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxzZWFyY2h8MzR8fHNvZmF8ZW58MHx8MHx8fDA%3D",
     type: "Vanity Table",
     price: 35,
     rating: 4.8,
@@ -90,6 +99,7 @@ const FurnitureData = [
   {
     id: uuidv4(),
     name: "Children's Study Desk with Colorful Drawers",
+    img: "https://images.unsplash.com/photo-1579656592043-a20e25a4aa4b?auto=format&fit=crop&q=80&w=1374&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D",
     type: "Study Desk",
     price: 22,
     rating: 4.2,

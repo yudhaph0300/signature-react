@@ -9,6 +9,7 @@ const AddFurniture = () => {
   const [newFurniture, setNewFurniture] = useState({
     id: uuidv4(),
     name: "",
+    img: "",
     type: "",
     price: 0,
     rating: 0,
@@ -45,6 +46,15 @@ const AddFurniture = () => {
                 onChange={handleInputChange}
               />
             </div>
+            <div className="form-group mb-3">
+              <input
+                name="img"
+                type="text"
+                className="form-control"
+                placeholder="Enter link of your image"
+                onChange={handleInputChange}
+              />
+            </div>
 
             <div className="input-group mb-3">
               <div className="input-group-prepend" style={{ width: "15%" }}>
@@ -57,9 +67,9 @@ const AddFurniture = () => {
                 name="type"
                 onChange={handleInputChange}
               >
-                {/* <option disabled value="" selected>
+                <option disabled value="" selected>
                   Choose product type
-                </option> */}
+                </option>
                 <option value="Dining Chair">Dining Chair</option>
                 <option value="Vanity Table">Vanity Table</option>
                 <option value="Bar Stool">Bar Stool</option>

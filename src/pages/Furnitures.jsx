@@ -25,7 +25,9 @@ function Furnitures() {
           <SearchBar />
         </div>
       </div>
-      <div className="container">
+      <div className="container mt-5">
+        <p className="fw-bold">Showing 12 of 60 pieces of furniture</p>
+        <hr className="border mb-2" />
         <div className="d-flex justify-content-center">
           <div className="row">
             {furnitureData.map((furniture) => (
@@ -43,7 +45,7 @@ function Furnitures() {
                     <div className="card-img-wrapper">
                       <img
                         className="card-img-top"
-                        src="https://images.unsplash.com/photo-1567016432779-094069958ea5?auto=format&fit=crop&q=60&w=500&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxzZWFyY2h8NHx8c29mYXxlbnwwfHwwfHx8MA%3D%3D"
+                        src={furniture.img}
                         height="200"
                         alt={furniture.name}
                         style={{
