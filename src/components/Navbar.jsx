@@ -36,7 +36,7 @@ function Navbar() {
               </Link>
             </li>
             <li className="nav-item">
-              <Link to="/furnitures" className="nav-link">
+              <Link to="/readme" className="btn btn-primary btn-readme">
                 Readme
               </Link>
             </li>

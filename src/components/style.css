@@ -1,0 +1,13 @@
+.btn-readme {
+   display: inline-block;
+   padding: 10px 20px;
+   font-size: 14px;
+   text-align: center;
+   text-decoration: none;
+   cursor: pointer;
+   border: 2px solid #007BFF;
+   border-radius: 30px;
+   overflow: hidden;
+   position: relative;
+   z-index: 1;
+}
