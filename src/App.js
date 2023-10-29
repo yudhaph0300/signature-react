@@ -19,8 +19,13 @@ import FurnituresResult from "./pages/FurnituresResult";
 import Readme from "./pages/Readme";
 import Login from "./pages/Login";
 import Register from "./pages/Register";
+import useAuth from "./auth";
+import NotFound from "./pages/NotFound";
+import Profile from "./pages/Profile";
 
 function App() {
+  const { user } = useAuth();
+
   return (
     <FurnitureProvider>
       <Router>
@@ -42,6 +47,7 @@ function App() {
             path="/furnitures/result/:search"
             element={<FurnituresResult />}
           />
+          <Route path="/profile" element={user ? <Profile /> : <NotFound />} />
         </Routes>
       </Router>
     </FurnitureProvider>

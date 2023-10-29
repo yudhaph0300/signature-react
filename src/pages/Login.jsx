@@ -1,12 +1,18 @@
 import "../style/login.css";
 import { useState } from "react";
+import useAuth from "../auth";
 
 function Login() {
+  const { user, login } = useAuth();
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
 
+  if (user) {
+    window.location.href = "/";
+  }
   const handleLogin = async (e) => {
     e.preventDefault();
+    login(email, password);
   };
 
   return (

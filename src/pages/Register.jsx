@@ -1,14 +1,22 @@
 import "../style/login.css";
 import { useState } from "react";
+import useAuth from "../auth";
 
 function Register() {
+  const { user, register } = useAuth();
   const [name, setName] = useState("");
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
 
+  if (user) {
+    window.location.href = "/";
+  }
+
   const handleRegister = async (e) => {
     e.preventDefault();
+    register(name, email, password);
   };
+
   return (
     <div className="login-form">
       <div class="container d-flex justify-content-center align-items-center h-100 mt-auto">

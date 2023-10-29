@@ -30,7 +30,6 @@ function Home() {
   return (
     <>
       <Navbar />
-
       <div className="position-relative">
         <img src={heroImage} alt="Hero" className="hero-image img-fluid" />
 
