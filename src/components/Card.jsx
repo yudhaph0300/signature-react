@@ -7,7 +7,7 @@ function Card({ imageSource, title, type, rating, description }) {
         <div className="col-md-3">
           <img src={imageSource} alt="Card" className="img-fluid" />
         </div>
-        <div className="col-md-9">
+        <div className="col-md-9 py-4">
           <h4 className="card-title fw-bold">{title}</h4>
           <p className="card-text">{type}</p>
           <p className="card-text">{rating}</p>

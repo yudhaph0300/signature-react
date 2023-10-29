@@ -1,3 +1,4 @@
+import "../style/furniture.css";
 import Navbar from "../components/Navbar";
 import SearchBar from "../components/SearchBar";
 import heroSearch from "../asset/search-furniture.png";

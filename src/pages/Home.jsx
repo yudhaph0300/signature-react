@@ -1,3 +1,4 @@
+import "../style/home.css";
 import React, { useContext, useEffect, useState } from "react";
 import Navbar from "../components/Navbar";
 import Footer from "../components/Footer";
@@ -48,9 +49,8 @@ function Home() {
           Featured furnitures recommended for you
         </h2>
         <p className="text-heading-rec text-center">
-          Lorem ipsum dolor sit amet consectetur adipisicing elit. Voluptas
-          nesciunt sint deserunt ab voluptatem fugit deleniti culpa provident
-          quidem laboriosam!
+          Transform Your Living Space with Our Expertly Curated Selection of
+          Premium Furnishings, Crafted for Unmatched Comfort and Elegance!
         </p>
         <hr className="border mb-2" />
 

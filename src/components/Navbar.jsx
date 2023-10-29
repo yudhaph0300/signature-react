@@ -30,14 +30,31 @@ function Navbar() {
                 About
               </Link>
             </li>
-            <li className="nav-item me-5">
+            <li className="nav-item me-3">
               <Link to="/furnitures" className="nav-link">
                 Furnitures
               </Link>
             </li>
-            <li className="nav-item">
-              <Link to="/readme" className="btn btn-primary btn-readme">
+            <li className="nav-item me-3">
+              <Link to="/readme" className="nav-link">
                 Readme
+              </Link>
+            </li>
+            <div className="line"></div>
+            <li className="nav-item ms-3 me-3">
+              <Link
+                to="/login"
+                className="btn btn-outline-primary btn-login-navbar"
+              >
+                Login
+              </Link>
+            </li>
+            <li className="nav-item">
+              <Link
+                to="/register"
+                className="btn btn-primary btn-register-navbar"
+              >
+                Register
               </Link>
             </li>
           </ul>

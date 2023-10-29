@@ -1,3 +1,5 @@
+import "../style/furniture.css";
+
 import Navbar from "../components/Navbar";
 import Footer from "../components/Footer";
 import { useContext } from "react";

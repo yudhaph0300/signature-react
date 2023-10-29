@@ -1,3 +1,5 @@
+import "./app.css";
+import "./components/style.css";
 import "bootstrap/dist/css/bootstrap.min.css";
 
 import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
@@ -13,12 +15,10 @@ import Settings from "./pages/admin/Settings";
 import AddFurniture from "./pages/admin/furniture/AddFurniture";
 import EditFurniture from "./pages/admin/furniture/EditFurniture";
 
-import "./app.css";
-import "./pages/style/home.css";
-import "./pages/style/furniture.css";
-import "./components/style.css";
 import FurnituresResult from "./pages/FurnituresResult";
 import Readme from "./pages/Readme";
+import Login from "./pages/Login";
+import Register from "./pages/Register";
 
 function App() {
   return (
@@ -33,6 +33,8 @@ function App() {
         </Routes>
         <Routes>
           <Route path="/" exact element={<Home />} />
+          <Route path="/register" exact element={<Register />} />
+          <Route path="/login" exact element={<Login />} />
           <Route path="/about" element={<About />} />
           <Route path="/furnitures" element={<Furnitures />} />
           <Route path="/readme" element={<Readme />} />
