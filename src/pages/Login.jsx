@@ -10,6 +10,7 @@ import { useState } from "react";
 import { useNavigate } from "react-router-dom";
 import { useAuthStatus } from "../hooks/useAuthStatus";
 import Spinner from "../components/Spinner";
+import OAuth from "../components/OAuth";
 
 function Login() {
   const [showPassword, setShowPassword] = useState(false);
@@ -69,6 +70,7 @@ function Login() {
             <p className="small">
               Enter your details to get sign in to your account
             </p>
+
             <form onSubmit={handleLogin}>
               <div class="form-group">
                 <label className="small" for="email">
@@ -110,7 +112,7 @@ function Login() {
                 </div>
               </div>
 
-              <div className="my-3 w-100 d-flex justify-content-center">
+              <div className="my-2 w-100 d-flex justify-content-center">
                 <a
                   href="/forgot-password"
                   className="btn btn-link fw-bold small mx-auto"
@@ -124,7 +126,9 @@ function Login() {
               </button>
             </form>
 
-            <div className="mt-3">
+            <OAuth />
+
+            <div>
               <p className="text-center small">
                 Don't have an account?{" "}
                 <span>

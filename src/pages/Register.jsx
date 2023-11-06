@@ -14,6 +14,7 @@ import { db } from "../firebase.config";
 import { useState } from "react";
 import { useNavigate } from "react-router-dom";
 import { toast } from "react-toastify";
+import OAuth from "../components/OAuth";
 
 function Register() {
   const [showPassword, setShowPassword] = useState(false);
@@ -136,7 +137,10 @@ function Register() {
                 Register
               </button>
             </form>
-            <div className="mt-3">
+
+            <OAuth />
+
+            <div>
               <p className="text-center small">
                 Already have an account?{" "}
                 <span>
