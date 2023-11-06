@@ -23,9 +23,7 @@ function Login() {
 
   const { checkingStatus, loggedIn } = useAuthStatus();
   if (checkingStatus) return <Spinner />;
-  if (loggedIn) {
-    return navigate("/profile");
-  }
+  if (loggedIn) return navigate("/profile");
 
   const handleInputChange = (e) => {
     const { name, value } = e.target;
@@ -111,10 +109,21 @@ function Login() {
                   </div>
                 </div>
               </div>
-              <button type="submit" class="btn btn-primary w-100 mt-4 py-2">
+
+              <div className="my-3 w-100 d-flex justify-content-center">
+                <a
+                  href="/forgot-password"
+                  className="btn btn-link fw-bold small mx-auto"
+                >
+                  Forgot password?
+                </a>
+              </div>
+
+              <button type="submit" class="btn btn-primary w-100 py-2">
                 Login
               </button>
             </form>
+
             <div className="mt-3">
               <p className="text-center small">
                 Don't have an account?{" "}
