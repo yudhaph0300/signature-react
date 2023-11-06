@@ -32,11 +32,13 @@ function App() {
     <FurnitureProvider>
       <Router>
         <Routes>
-          <Route path="/admin" element={<Index />} />
-          <Route path="/admin/furniture" element={<Furniture />} />
-          <Route path="/admin/settings" element={<Settings />} />
-          <Route path="/admin/furniture/add" element={<AddFurniture />} />
-          <Route path="/admin/furniture/edit/:id" element={<EditFurniture />} />
+          <Route path="/admin" element={<PrivateRoute isAdmin={true} />}>
+            <Route index element={<Index />} />
+            <Route path="furniture" element={<Furniture />} />
+            <Route path="settings" element={<Settings />} />
+            <Route path="furniture/add" element={<AddFurniture />} />
+            <Route path="furniture/edit/:id" element={<EditFurniture />} />
+          </Route>
         </Routes>
         <Routes>
           <Route path="/" element={<Home />} />

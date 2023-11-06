@@ -1,24 +1,36 @@
 import { getAuth, onAuthStateChanged } from "firebase/auth";
 import { useEffect, useRef, useState } from "react";
+import { getDoc, doc } from "firebase/firestore";
+import { db } from "../firebase.config";
 
 export const useAuthStatus = () => {
   const [loggedIn, setLoggedIn] = useState(false);
   const [checkingStatus, setCheckingStatus] = useState(true);
+  const [isAdmin, setIsAdmin] = useState(false); // Tambahkan state untuk isAdmin
   const isMounted = useRef(true);
 
   useEffect(() => {
-    if (isMounted) {
-      const auth = getAuth();
-      onAuthStateChanged(auth, (user) => {
-        if (user) {
-          setLoggedIn(true);
+    const auth = getAuth();
+    const unsubscribe = onAuthStateChanged(auth, async (user) => {
+      if (user) {
+        setLoggedIn(true);
+
+        // Dapatkan data pengguna dari Firestore
+        const userDoc = await getDoc(doc(db, "users", user.uid));
+
+        if (userDoc.exists()) {
+          const userData = userDoc.data();
+          setIsAdmin(userData.isAdmin || false); // Set isAdmin berdasarkan data pengguna
         }
-        setCheckingStatus(false);
-      });
-    }
+      }
+      setCheckingStatus(false);
+    });
+
     return () => {
+      unsubscribe(); // Unsubscribe dari event listener saat komponen dibongkar
       isMounted.current = false;
     };
-  }, [isMounted]);
-  return { loggedIn, checkingStatus };
+  }, []);
+
+  return { loggedIn, checkingStatus, isAdmin };
 };

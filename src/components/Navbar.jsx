@@ -1,15 +1,19 @@
 import { getAuth } from "firebase/auth";
 import { Link, useNavigate } from "react-router-dom";
 import { useAuthStatus } from "../hooks/useAuthStatus";
+import Spinner from "./Spinner";
 
 function Navbar() {
   const navigate = useNavigate();
   const auth = getAuth();
-  const { loggedIn } = useAuthStatus();
+  const { loggedIn, checkingStatus, isAdmin } = useAuthStatus();
+  if (checkingStatus) {
+    <Spinner />;
+  }
 
   const onLogout = () => {
     auth.signOut();
-    navigate("/");
+    navigate("/login");
   };
 
   return (
@@ -52,7 +56,7 @@ function Navbar() {
               </Link>
             </li>
             <div className="line mx-3"></div>
-            {loggedIn ? (
+            {loggedIn && !isAdmin && (
               <>
                 <li className="nav-item me-3">
                   <Link
@@ -71,7 +75,17 @@ function Navbar() {
                   </button>
                 </li>
               </>
-            ) : (
+            )}
+            {loggedIn && isAdmin && (
+              <>
+                <li className="nav-item me-3">
+                  <Link to="/admin" className="btn btn-dark btn-login-navbar">
+                    Back to dashboard
+                  </Link>
+                </li>
+              </>
+            )}
+            {!loggedIn && (
               <>
                 <li className="nav-item me-3">
                   <Link

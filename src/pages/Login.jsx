@@ -11,6 +11,8 @@ import { useNavigate } from "react-router-dom";
 import { useAuthStatus } from "../hooks/useAuthStatus";
 import Spinner from "../components/Spinner";
 import OAuth from "../components/OAuth";
+import { doc, getDoc } from "@firebase/firestore";
+import { db } from "../firebase.config";
 
 function Login() {
   const [showPassword, setShowPassword] = useState(false);
@@ -49,7 +51,16 @@ function Login() {
       );
 
       if (userCredential.user) {
-        navigate("/");
+        const user = userCredential.user;
+        const userDoc = await getDoc(doc(db, "users", user.uid));
+        if (userDoc.exists()) {
+          const userData = userDoc.data();
+          if (userData.isAdmin) {
+            navigate("/admin");
+          } else {
+            navigate("/");
+          }
+        }
       }
     } catch (error) {
       toast.error("Bad Credentials");
@@ -58,10 +69,10 @@ function Login() {
 
   return (
     <div className="login-form">
-      <div class="container d-flex justify-content-center align-items-center h-100 mt-auto">
-        <div class="card p-3 shadow-lg" style={{ minWidth: "50%" }}>
-          <div class="card-body">
-            <p class="card-title fw-bold text-center">
+      <div className="container d-flex justify-content-center align-items-center h-100 mt-auto">
+        <div className="card p-3 shadow-lg" style={{ minWidth: "50%" }}>
+          <div className="card-body">
+            <p className="card-title fw-bold text-center">
               Sign in to your account
             </p>
             <h3 className="mt-4 mb-0 fw-bold">
@@ -72,7 +83,7 @@ function Login() {
             </p>
 
             <form onSubmit={handleLogin}>
-              <div class="form-group">
+              <div className="form-group">
                 <label className="small" for="email">
                   Email Address
                 </label>
@@ -86,7 +97,7 @@ function Login() {
                   onChange={handleInputChange}
                 />
               </div>
-              <div class="form-group mt-2">
+              <div className="form-group mt-2">
                 <label className="small" for="password">
                   Password
                 </label>
@@ -121,7 +132,7 @@ function Login() {
                 </a>
               </div>
 
-              <button type="submit" class="btn btn-primary w-100 py-2">
+              <button type="submit" className="btn btn-primary w-100 py-2">
                 Login
               </button>
             </form>

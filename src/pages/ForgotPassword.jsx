@@ -28,16 +28,16 @@ function ForgotPassword() {
   };
   return (
     <div className="login-form">
-      <div class="container d-flex justify-content-center align-items-center h-100 mt-auto">
-        <div class="card p-3 shadow-lg" style={{ minWidth: "50%" }}>
-          <div class="card-body">
-            <p class="card-title fw-bold text-center">Forgot Password</p>
+      <div className="container d-flex justify-content-center align-items-center h-100 mt-auto">
+        <div className="card p-3 shadow-lg" style={{ minWidth: "50%" }}>
+          <div className="card-body">
+            <p className="card-title fw-bold text-center">Forgot Password</p>
             <h3 className="mt-4 mb-0 fw-bold">
               Welcome to <span style={{ color: "#007bff" }}>Signature</span>
             </h3>
             <p className="small">Enter your email to reset your password</p>
             <form onSubmit={onSubmit}>
-              <div class="form-group">
+              <div className="form-group">
                 <label className="small" for="email">
                   Email Address
                 </label>
@@ -52,7 +52,7 @@ function ForgotPassword() {
                 />
               </div>
 
-              <button type="submit" class="btn btn-primary w-100 py-2 mt-3">
+              <button type="submit" className="btn btn-primary w-100 py-2 mt-3">
                 Send Reset Link
               </button>
             </form>
