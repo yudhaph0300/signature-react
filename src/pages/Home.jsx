@@ -5,6 +5,7 @@ import Footer from "../components/Footer";
 import heroImage from "../asset/home-hero.png";
 import { FurnitureContext } from "../data/FurnitureContext";
 import SearchBar from "../components/SearchBar";
+import Spinner from "../components/Spinner";
 
 function Home() {
   const [furnitureRec, setFurnitureRec] = useState(null);
@@ -23,7 +24,7 @@ function Home() {
   console.log(furnitureData);
 
   if (furnitureRec === null) {
-    return <div>Loading...</div>;
+    return <Spinner />;
   }
 
   const handleClick = () => {};

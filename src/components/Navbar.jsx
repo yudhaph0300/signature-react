@@ -1,8 +1,16 @@
-import { Link } from "react-router-dom";
-import useAuth from "../auth";
+import { getAuth } from "firebase/auth";
+import { Link, useNavigate } from "react-router-dom";
+import { useAuthStatus } from "../hooks/useAuthStatus";
 
 function Navbar() {
-  const { user, logout } = useAuth();
+  const navigate = useNavigate();
+  const auth = getAuth();
+  const { loggedIn } = useAuthStatus();
+
+  const onLogout = () => {
+    auth.signOut();
+    navigate("/");
+  };
 
   return (
     <nav className="navbar navbar-expand-lg navbar-dark navbar-custom py-3">
@@ -43,10 +51,8 @@ function Navbar() {
                 Readme
               </Link>
             </li>
-
             <div className="line mx-3"></div>
-
-            {user ? (
+            {loggedIn ? (
               <>
                 <li className="nav-item me-3">
                   <Link
@@ -58,8 +64,8 @@ function Navbar() {
                 </li>
                 <li className="nav-item">
                   <button
+                    onClick={onLogout}
                     className="btn btn-danger btn-register-navbar"
-                    onClick={logout}
                   >
                     Logout
                   </button>

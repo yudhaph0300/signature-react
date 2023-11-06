@@ -1,20 +1,70 @@
 import "../style/login.css";
+import { Eye, EyeSlash } from "react-bootstrap-icons";
+
+// Firebase
+import {
+  getAuth,
+  createUserWithEmailAndPassword,
+  updateProfile,
+} from "firebase/auth";
+import { setDoc, doc, serverTimestamp } from "firebase/firestore";
+import { db } from "../firebase.config";
+
+// React
 import { useState } from "react";
-import useAuth from "../auth";
+import { useNavigate } from "react-router-dom";
+import { toast } from "react-toastify";
 
 function Register() {
-  const { user, register } = useAuth();
-  const [name, setName] = useState("");
-  const [email, setEmail] = useState("");
-  const [password, setPassword] = useState("");
+  const [showPassword, setShowPassword] = useState(false);
+  const [formData, setFormData] = useState({
+    name: "",
+    email: "",
+    password: "",
+  });
 
-  if (user) {
-    window.location.href = "/";
-  }
+  const { name, email, password } = formData;
+
+  const handleInputChange = (e) => {
+    const { name, value } = e.target;
+    setFormData({
+      ...formData,
+      [name]: value,
+    });
+  };
+
+  const toggleShowPassword = () => {
+    setShowPassword(!showPassword);
+  };
+
+  const navigate = useNavigate();
 
   const handleRegister = async (e) => {
     e.preventDefault();
-    register(name, email, password);
+
+    try {
+      const auth = getAuth();
+
+      const userCredential = await createUserWithEmailAndPassword(
+        auth,
+        email,
+        password
+      );
+      const user = userCredential.user;
+
+      updateProfile(auth.currentUser, {
+        displayName: name,
+      });
+
+      const formDataCopy = { ...formData };
+      delete formDataCopy.password;
+      formDataCopy.timestamp = serverTimestamp();
+
+      await setDoc(doc(db, "users", user.uid), formDataCopy);
+      navigate("/");
+    } catch (error) {
+      toast.error("Something when wrong with registration");
+    }
   };
 
   return (
@@ -37,9 +87,10 @@ function Register() {
                   type="text"
                   className="form-control small py-2"
                   id="name"
+                  name="name"
                   placeholder="Enter your name here"
                   value={name}
-                  onChange={(e) => setName(e.target.value)}
+                  onChange={handleInputChange}
                 />
               </div>
               <div class="form-group mt-2">
@@ -50,23 +101,36 @@ function Register() {
                   type="email"
                   className="form-control small py-2"
                   id="email"
+                  name="email"
                   placeholder="Enter your email here"
                   value={email}
-                  onChange={(e) => setEmail(e.target.value)}
+                  onChange={handleInputChange}
                 />
               </div>
               <div class="form-group mt-2">
                 <label className="small" for="password">
                   Password
                 </label>
-                <input
-                  type="password"
-                  className="form-control small py-2"
-                  id="password"
-                  placeholder="Password"
-                  value={password}
-                  onChange={(e) => setPassword(e.target.value)}
-                />
+                <div className="input-group">
+                  <input
+                    type={showPassword ? "text" : "password"}
+                    className="form-control small py-2"
+                    id="password"
+                    name="password"
+                    placeholder="Password"
+                    value={password}
+                    onChange={handleInputChange}
+                  />
+                  <div className="input-group-append">
+                    <button
+                      className="btn btn-outline-secondary"
+                      type="button"
+                      onClick={toggleShowPassword}
+                    >
+                      {showPassword ? <EyeSlash /> : <Eye />}
+                    </button>
+                  </div>
+                </div>
               </div>
               <button type="submit" class="btn btn-primary w-100 mt-4 py-2">
                 Register

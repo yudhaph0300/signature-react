@@ -1,18 +1,60 @@
 import "../style/login.css";
+import { Eye, EyeSlash } from "react-bootstrap-icons";
+
+import { toast } from "react-toastify";
+
+// Firebase
+import { getAuth, signInWithEmailAndPassword } from "firebase/auth";
+
 import { useState } from "react";
-import useAuth from "../auth";
+import { useNavigate } from "react-router-dom";
+import { useAuthStatus } from "../hooks/useAuthStatus";
+import Spinner from "../components/Spinner";
 
 function Login() {
-  const { user, login } = useAuth();
-  const [email, setEmail] = useState("");
-  const [password, setPassword] = useState("");
+  const [showPassword, setShowPassword] = useState(false);
+  const [formData, setFormData] = useState({
+    email: "",
+    password: "",
+  });
 
-  if (user) {
-    window.location.href = "/";
+  const { email, password } = formData;
+  const navigate = useNavigate();
+
+  const { checkingStatus, loggedIn } = useAuthStatus();
+  if (checkingStatus) return <Spinner />;
+  if (loggedIn) {
+    return navigate("/profile");
   }
+
+  const handleInputChange = (e) => {
+    const { name, value } = e.target;
+    setFormData({
+      ...formData,
+      [name]: value,
+    });
+  };
+
+  const toggleShowPassword = () => {
+    setShowPassword(!showPassword);
+  };
   const handleLogin = async (e) => {
     e.preventDefault();
-    login(email, password);
+
+    try {
+      const auth = getAuth();
+      const userCredential = await signInWithEmailAndPassword(
+        auth,
+        email,
+        password
+      );
+
+      if (userCredential.user) {
+        navigate("/");
+      }
+    } catch (error) {
+      toast.error("Bad Credentials");
+    }
   };
 
   return (
@@ -31,30 +73,43 @@ function Login() {
             </p>
             <form onSubmit={handleLogin}>
               <div class="form-group">
-                <label className="small" for="name">
+                <label className="small" for="email">
                   Email Address
                 </label>
                 <input
                   type="email"
                   className="form-control small py-2"
                   id="email"
+                  name="email"
                   placeholder="Enter your email here"
                   value={email}
-                  onChange={(e) => setEmail(e.target.value)}
+                  onChange={handleInputChange}
                 />
               </div>
               <div class="form-group mt-2">
                 <label className="small" for="password">
                   Password
                 </label>
-                <input
-                  type="password"
-                  className="form-control small py-2"
-                  id="password"
-                  placeholder="Password"
-                  value={password}
-                  onChange={(e) => setPassword(e.target.value)}
-                />
+                <div className="input-group">
+                  <input
+                    type={showPassword ? "text" : "password"}
+                    className="form-control small py-2"
+                    id="password"
+                    name="password"
+                    placeholder="Password"
+                    value={password}
+                    onChange={handleInputChange}
+                  />
+                  <div className="input-group-append">
+                    <button
+                      className="btn btn-outline-secondary"
+                      type="button"
+                      onClick={toggleShowPassword}
+                    >
+                      {showPassword ? <EyeSlash /> : <Eye />}
+                    </button>
+                  </div>
+                </div>
               </div>
               <button type="submit" class="btn btn-primary w-100 mt-4 py-2">
                 Login

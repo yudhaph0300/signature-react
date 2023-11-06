@@ -2,6 +2,9 @@ import "./app.css";
 import "./components/style.css";
 import "bootstrap/dist/css/bootstrap.min.css";
 
+import { ToastContainer } from "react-toastify";
+import "react-toastify/dist/ReactToastify.css";
+
 import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
 import { FurnitureProvider } from "./data/FurnitureContext";
 
@@ -19,13 +22,11 @@ import FurnituresResult from "./pages/FurnituresResult";
 import Readme from "./pages/Readme";
 import Login from "./pages/Login";
 import Register from "./pages/Register";
-import useAuth from "./auth";
 import NotFound from "./pages/NotFound";
 import Profile from "./pages/Profile";
+import PrivateRoute from "./components/PrivateRoute";
 
 function App() {
-  const { user } = useAuth();
-
   return (
     <FurnitureProvider>
       <Router>
@@ -37,7 +38,7 @@ function App() {
           <Route path="/admin/furniture/edit/:id" element={<EditFurniture />} />
         </Routes>
         <Routes>
-          <Route path="/" exact element={<Home />} />
+          <Route path="/" element={<Home />} />
           <Route path="/register" exact element={<Register />} />
           <Route path="/login" exact element={<Login />} />
           <Route path="/about" element={<About />} />
@@ -47,9 +48,14 @@ function App() {
             path="/furnitures/result/:search"
             element={<FurnituresResult />}
           />
-          <Route path="/profile" element={user ? <Profile /> : <NotFound />} />
+          <Route path="/profile" element={<PrivateRoute />}>
+            <Route path="/profile" element={<Profile />} />
+          </Route>
+
+          <Route path="*" element={<NotFound />} />
         </Routes>
       </Router>
+      <ToastContainer />
     </FurnitureProvider>
   );
 }
