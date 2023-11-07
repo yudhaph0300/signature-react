@@ -6,14 +6,23 @@ import { doc, updateDoc } from "firebase/firestore";
 import { db } from "../firebase.config";
 import { toast } from "react-toastify";
 import Navbar from "../components/Navbar";
+import { useAuthStatus } from "../hooks/useAuthStatus";
+import Spinner from "../components/Spinner";
+import { useNavigate } from "react-router-dom";
 
 function Profile() {
   const auth = getAuth();
+
+  const { checkingStatus, isAdmin } = useAuthStatus();
   const [changeDetails, setChangeDetails] = useState(false);
   const [formData, setFormData] = useState({
     name: auth.currentUser.displayName,
     email: auth.currentUser.email,
   });
+
+  const navigate = useNavigate();
+  if (checkingStatus) return <Spinner />;
+  if (isAdmin) return navigate("/admin");
 
   const { name, email } = formData;
 
