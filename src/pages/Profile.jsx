@@ -21,7 +21,6 @@ function Profile() {
   });
 
   const navigate = useNavigate();
-  if (checkingStatus) return <Spinner />;
   if (isAdmin) return navigate("/admin");
 
   const { name, email } = formData;
@@ -58,6 +57,7 @@ function Profile() {
       <div className="container my-5">
         <div className="card p-3 shadow-lg">
           <div className="card-body">
+            {checkingStatus && <Spinner />}
             <div style={{ float: "left" }}>
               <p className="card-title fw-bold">Personal profile</p>
             </div>

@@ -7,9 +7,6 @@ function Navbar() {
   const navigate = useNavigate();
   const auth = getAuth();
   const { loggedIn, checkingStatus, isAdmin } = useAuthStatus();
-  if (checkingStatus) {
-    <Spinner />;
-  }
 
   const onLogout = () => {
     auth.signOut();
@@ -56,7 +53,67 @@ function Navbar() {
               </Link>
             </li>
             <div className="line mx-3"></div>
-            {loggedIn && !isAdmin && (
+
+            {checkingStatus ? (
+              <Spinner />
+            ) : (
+              <>
+                {loggedIn && !isAdmin && (
+                  <>
+                    <li className="nav-item me-3">
+                      <Link
+                        to="/profile"
+                        className="btn btn-success btn-register-navbar"
+                      >
+                        Profile
+                      </Link>
+                    </li>
+                    <li className="nav-item">
+                      <button
+                        onClick={onLogout}
+                        className="btn btn-danger btn-register-navbar"
+                      >
+                        Logout
+                      </button>
+                    </li>
+                  </>
+                )}
+                {loggedIn && isAdmin && (
+                  <>
+                    <li className="nav-item me-3">
+                      <Link
+                        to="/admin"
+                        className="btn btn-dark btn-login-navbar"
+                      >
+                        Back to dashboard
+                      </Link>
+                    </li>
+                  </>
+                )}
+                {!loggedIn && (
+                  <>
+                    <li className="nav-item me-3">
+                      <Link
+                        to="/login"
+                        className="btn btn-outline-primary btn-login-navbar"
+                      >
+                        Login
+                      </Link>
+                    </li>
+                    <li className="nav-item">
+                      <Link
+                        to="/register"
+                        className="btn btn-primary btn-register-navbar"
+                      >
+                        Register
+                      </Link>
+                    </li>
+                  </>
+                )}
+              </>
+            )}
+
+            {/* {loggedIn && !isAdmin && (
               <>
                 <li className="nav-item me-3">
                   <Link
@@ -104,7 +161,7 @@ function Navbar() {
                   </Link>
                 </li>
               </>
-            )}
+            )} */}
           </ul>
         </div>
       </div>
