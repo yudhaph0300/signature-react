@@ -6,7 +6,6 @@ import { ToastContainer } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 
 import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
-import { FurnitureProvider } from "./data/FurnitureContext";
 
 import Home from "./pages/Home";
 import About from "./pages/About";
@@ -29,7 +28,7 @@ import PrivateRoute from "./components/PrivateRoute";
 
 function App() {
   return (
-    <FurnitureProvider>
+    <>
       <Router>
         <Routes>
           <Route path="/admin" element={<PrivateRoute isAdmin={true} />}>
@@ -60,7 +59,7 @@ function App() {
         </Routes>
       </Router>
       <ToastContainer />
-    </FurnitureProvider>
+    </>
   );
 }
 

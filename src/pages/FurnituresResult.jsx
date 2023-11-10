@@ -3,29 +3,47 @@ import Navbar from "../components/Navbar";
 import SearchBar from "../components/SearchBar";
 import heroSearch from "../asset/search-furniture.png";
 import { useParams } from "react-router-dom";
-import { useContext, useEffect, useState } from "react";
-import { FurnitureContext } from "../data/FurnitureContext";
+import { useEffect, useState } from "react";
 import Card from "../components/Card";
 import Footer from "../components/Footer";
+import { collection, getDocs } from "@firebase/firestore";
+import { db } from "../firebase.config";
+import Spinner from "../components/Spinner";
 
 function FurnituresResult() {
   const { search } = useParams();
 
-  const { furnitureData } = useContext(FurnitureContext);
-  const [results, setResults] = useState([]);
+  const [results, setResults] = useState(null);
+  const [loading, setLoading] = useState(true);
 
   useEffect(() => {
-    if (!search) return;
-    if (!furnitureData) return;
+    const fetchDataResult = async () => {
+      try {
+        const furnitures = collection(db, "furnitures");
+        const querySnap = await getDocs(furnitures);
 
-    const searchFurniture = furnitureData.filter((item) =>
-      item.type.toLowerCase().includes(search.toLowerCase())
-    );
+        let data = [];
 
-    if (searchFurniture) {
-      setResults(searchFurniture);
-    }
-  }, [search, furnitureData, setResults]);
+        querySnap.forEach((doc) => {
+          data.push(doc.data());
+        });
+
+        const lowercaseSearch = search.toLowerCase();
+        const resultData = data.filter((item) => {
+          const lowercaseName = item.name.toLowerCase();
+          return lowercaseName.includes(lowercaseSearch);
+        });
+
+        setResults(resultData);
+      } catch (error) {
+        console.error("Error fetching data:", error);
+      } finally {
+        setLoading(false);
+      }
+    };
+
+    fetchDataResult();
+  }, [search]);
 
   console.log(results);
 
@@ -46,30 +64,39 @@ function FurnituresResult() {
       </div>
 
       <div className="container mt-5">
-        <p className="fw-bold">
-          Found {results.length} furniture for “{search}”
-        </p>
+        {!loading && (
+          <p className="fw-bold">
+            Found {results.length || "0"} furniture for “{search}”
+          </p>
+        )}
+
         <hr className="border mb-2" />
         <div className="my-4">
-          {results.length === 0 && (
-            <h3 className="text-center my-5">
-              Furniture not found, enter another keyword!
-            </h3>
+          {loading ? (
+            <Spinner />
+          ) : (
+            <>
+              {results.length === 0 && (
+                <h5 className="text-center my-5">
+                  Furniture not found, enter another keyword!
+                </h5>
+              )}
+              {results.map((res, index) => (
+                <div className="mb-3">
+                  <Card
+                    key={index}
+                    imageSource={
+                      "https://images.unsplash.com/photo-1567016432779-094069958ea5?auto=format&fit=crop&q=60&w=500&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxzZWFyY2h8NHx8c29mYXxlbnwwfHwwfHx8MA%3D%3D"
+                    }
+                    title={res.name}
+                    type={res.type}
+                    rating={res.rating}
+                    description={res.description}
+                  />
+                </div>
+              ))}
+            </>
           )}
-          {results.map((res, index) => (
-            <div className="mb-3">
-              <Card
-                key={index}
-                imageSource={
-                  "https://images.unsplash.com/photo-1567016432779-094069958ea5?auto=format&fit=crop&q=60&w=500&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxzZWFyY2h8NHx8c29mYXxlbnwwfHwwfHx8MA%3D%3D"
-                }
-                title={res.name}
-                type={res.type}
-                rating={res.rating}
-                description={res.description}
-              />
-            </div>
-          ))}
         </div>
       </div>
 

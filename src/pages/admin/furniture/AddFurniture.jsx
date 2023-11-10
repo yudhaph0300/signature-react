@@ -1,11 +1,9 @@
-import { useContext, useState } from "react";
+import { useState } from "react";
 import Sidebar from "../../../components/admin/Sidebar";
 import { v4 as uuidv4 } from "uuid";
-import { FurnitureContext } from "../../../data/FurnitureContext";
 import { Link } from "react-router-dom";
 
 const AddFurniture = () => {
-  const { addFurniture } = useContext(FurnitureContext);
   const [newFurniture, setNewFurniture] = useState({
     id: uuidv4(),
     name: "",
@@ -25,7 +23,7 @@ const AddFurniture = () => {
   };
   const onSubmit = (e) => {
     e.preventDefault();
-    addFurniture(newFurniture);
+
     window.location.href = "/admin/furniture";
   };
 

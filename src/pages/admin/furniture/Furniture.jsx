@@ -1,23 +1,17 @@
 import "../style/index.css";
 import Sidebar from "../../../components/admin/Sidebar";
-import { useContext } from "react";
-import { FurnitureContext } from "../../../data/FurnitureContext";
 import { Link } from "react-router-dom";
 
 function Furniture() {
-  const { furnitureData, deleteFurniture } = useContext(FurnitureContext);
-
-  const handleDelete = (id) => {
-    const confirmDelete = window.confirm(
-      "Are you sure you want to remove this furniture?"
-    );
-
-    if (confirmDelete) {
-      deleteFurniture(id);
-      alert("Furniture removed successfully!");
-    }
-  };
-
+  const furnitureData = [
+    {
+      id: 1,
+      name: "This name",
+      type: "this type",
+      price: "this price",
+      rating: "this rating",
+    },
+  ];
   return (
     <div>
       <Sidebar />
@@ -27,7 +21,7 @@ function Furniture() {
             <div className="d-flex justify-content-between mb-3">
               <div className="card-title">
                 <h3>Furniture</h3>
-                <p>Showing {furnitureData.length} furniture from all data</p>
+                <p>Showing 0 furniture from all data</p>
               </div>
               <div className="col ms-5">
                 <input
@@ -76,7 +70,6 @@ function Furniture() {
                         <button
                           type="button"
                           className="btn btn-outline-danger rounded-pill px-4"
-                          onClick={() => handleDelete(furniture.id)}
                         >
                           Delete
                         </button>

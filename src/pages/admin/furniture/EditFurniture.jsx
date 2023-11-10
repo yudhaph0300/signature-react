@@ -1,13 +1,22 @@
-import { useContext, useEffect, useState } from "react";
+import { useEffect, useState } from "react";
 import Sidebar from "../../../components/admin/Sidebar";
-import { FurnitureContext } from "../../../data/FurnitureContext";
 import { useParams } from "react-router-dom";
 import { Link } from "react-router-dom";
 
 const EditFurniture = () => {
   const { id } = useParams();
 
-  const { furnitureData, editFurniture } = useContext(FurnitureContext);
+  // eslint-disable-next-line react-hooks/exhaustive-deps
+  const furnitureData = [
+    {
+      id: 1,
+      name: "This name",
+      type: "this type",
+      price: "this price",
+      rating: "this rating",
+    },
+  ];
+
   const [formData, setFormData] = useState({
     name: "",
     type: "",
@@ -37,7 +46,6 @@ const EditFurniture = () => {
 
   const onSubmit = (e) => {
     e.preventDefault();
-    editFurniture(id, formData);
 
     window.location.href = "/admin/furniture";
   };
