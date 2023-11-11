@@ -9,7 +9,7 @@ import { getAuth, signInWithEmailAndPassword } from "firebase/auth";
 import { useState } from "react";
 import { useNavigate } from "react-router-dom";
 import { useAuthStatus } from "../hooks/useAuthStatus";
-import Spinner from "../components/Spinner";
+import SpinnerFull from "../components/SpinnerFull";
 import OAuth from "../components/OAuth";
 import { doc, getDoc } from "@firebase/firestore";
 import { db } from "../firebase.config";
@@ -25,7 +25,7 @@ function Login() {
   const navigate = useNavigate();
 
   const { checkingStatus, loggedIn } = useAuthStatus();
-  if (checkingStatus) return <Spinner />;
+  if (checkingStatus) return <SpinnerFull />;
   if (loggedIn) return navigate("/profile");
 
   const handleInputChange = (e) => {

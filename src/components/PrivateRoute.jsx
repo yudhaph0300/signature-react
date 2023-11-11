@@ -1,20 +1,14 @@
-// components/PrivateRoute.js
 import { Navigate, Outlet } from "react-router-dom";
 import { useAuthStatus } from "../hooks/useAuthStatus";
-import Spinner from "./Spinner";
+import SpinnerFull from "./SpinnerFull";
 
-const PrivateRoute = ({ isAdmin, ...props }) => {
-  const { loggedIn, checkingStatus, isAdmin: userIsAdmin } = useAuthStatus();
+const PrivateRoute = () => {
+  const { loggedIn, checkingStatus } = useAuthStatus();
 
   if (checkingStatus) {
-    return <Spinner />;
+    return <SpinnerFull />;
   }
-
-  if (isAdmin && !userIsAdmin) {
-    return <Navigate to="/" />;
-  }
-
-  return loggedIn ? <Outlet {...props} /> : <Navigate to="/login" />;
+  return loggedIn ? <Outlet /> : <Navigate to="/login" />;
 };
 
 export default PrivateRoute;
