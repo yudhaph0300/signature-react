@@ -1,6 +1,6 @@
 import "./style.css";
 
-function Spinner() {
+function SpinnerFull() {
   return (
     <div className="spinner-100vh">
       <div className="spinner-container">
@@ -10,4 +10,4 @@ function Spinner() {
   );
 }
 
-export default Spinner;
+export default SpinnerFull;

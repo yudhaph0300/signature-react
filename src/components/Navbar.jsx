@@ -3,6 +3,9 @@ import { Link, useNavigate } from "react-router-dom";
 import { useAuthStatus } from "../hooks/useAuthStatus";
 import Spinner from "./Spinner";
 
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import { faSignOut, faUser } from "@fortawesome/free-solid-svg-icons";
+
 function Navbar() {
   const navigate = useNavigate();
   const auth = getAuth();
@@ -65,7 +68,10 @@ function Navbar() {
                         to="/profile"
                         className="btn btn-success btn-register-navbar"
                       >
-                        Profile
+                        <div className="d-flex align-items-center">
+                          <FontAwesomeIcon icon={faUser} className="me-2" />
+                          Profile
+                        </div>
                       </Link>
                     </li>
                     <li className="nav-item">
@@ -73,7 +79,10 @@ function Navbar() {
                         onClick={onLogout}
                         className="btn btn-danger btn-register-navbar"
                       >
-                        Logout
+                        <div className="d-flex align-items-center">
+                          <FontAwesomeIcon icon={faSignOut} className="me-2" />
+                          Logout
+                        </div>
                       </button>
                     </li>
                   </>
