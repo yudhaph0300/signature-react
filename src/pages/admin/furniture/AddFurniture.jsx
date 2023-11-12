@@ -140,9 +140,8 @@ const AddFurniture = () => {
 
     delete formDataCopy.images;
 
-    // eslint-disable-next-line no-unused-vars
-    const docRef = await addDoc(collection(db, "furnitures"), formDataCopy);
-    // console.log(docRef);
+    await addDoc(collection(db, "furnitures"), formDataCopy);
+
     setLoading(false);
     toast.success("Furniture Added");
     navigate(`/admin/furniture`);
