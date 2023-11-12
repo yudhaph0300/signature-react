@@ -1,30 +1,67 @@
 import { useState } from "react";
 import Sidebar from "../../../components/admin/Sidebar";
-import { v4 as uuidv4 } from "uuid";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
+import { getAuth, onAuthStateChanged } from "firebase/auth";
+import { useRef } from "react";
+import { useEffect } from "react";
+import SpinnerFull from "../../../components/SpinnerFull";
 
 const AddFurniture = () => {
-  const [newFurniture, setNewFurniture] = useState({
-    id: uuidv4(),
+  const [loading, setLoading] = useState(false);
+  const [formData, setFormData] = useState({
     name: "",
-    img: "",
     type: "",
+    images: {},
     price: 0,
-    rating: 0,
     description: "",
   });
 
-  const handleInputChange = (e) => {
-    const { name, value } = e.target;
-    setNewFurniture({
-      ...newFurniture,
-      [name]: value,
-    });
+  const { name, type, images, price, description } = formData;
+
+  const auth = getAuth();
+  const navigate = useNavigate();
+  const isMounted = useRef(true);
+
+  useEffect(() => {
+    if (isMounted) {
+      onAuthStateChanged(auth, (user) => {
+        if (user) {
+          setFormData({ ...formData, userRef: user.uid });
+        } else {
+          navigate("/login");
+        }
+      });
+    }
+
+    return () => {
+      isMounted.current = false;
+    };
+  }, [isMounted]);
+
+  if (loading) {
+    return <SpinnerFull />;
+  }
+
+  const onMutate = (e) => {
+    // Files
+    if (e.target.files) {
+      setFormData((prevState) => ({
+        ...prevState,
+        images: e.target.files,
+      }));
+    }
+
+    // Text/Number
+    if (!e.target.files) {
+      setFormData((prevState) => ({
+        ...prevState,
+        [e.target.id]: e.target.value,
+      }));
+    }
   };
   const onSubmit = (e) => {
     e.preventDefault();
-
-    window.location.href = "/admin/furniture";
+    console.log(formData);
   };
 
   return (
@@ -32,74 +69,84 @@ const AddFurniture = () => {
       <Sidebar />
       <div className="content">
         <div className="card shadow border-0 p-4">
-          <h3 className="mb-4">Form Add Furniture</h3>
+          <h3 className="mb-4 fw-bold">Create new furniture</h3>
           <form onSubmit={onSubmit}>
             <div className="form-group mb-3">
+              <label htmlFor="text">Name</label>
               <input
                 name="name"
+                id="name"
                 type="text"
                 className="form-control"
                 placeholder="Enter your product name"
-                //  value={newFurniture.name}
-                onChange={handleInputChange}
-              />
-            </div>
-            <div className="form-group mb-3">
-              <input
-                name="img"
-                type="text"
-                className="form-control"
-                placeholder="Enter link of your image"
-                onChange={handleInputChange}
+                value={name}
+                onChange={onMutate}
               />
             </div>
 
             <div className="input-group mb-3">
               <div className="input-group-prepend" style={{ width: "15%" }}>
-                <label className="input-group-text" for="type">
+                <label className="input-group-text" htmlFor="type">
                   Type
                 </label>
               </div>
               <select
                 className="custom-select form-control"
                 name="type"
-                onChange={handleInputChange}
+                id="type"
+                onChange={onMutate}
+                value={type}
               >
-                <option disabled value="" selected>
-                  Choose product type
-                </option>
-                <option value="Dining Chair">Dining Chair</option>
-                <option value="Vanity Table">Vanity Table</option>
-                <option value="Bar Stool">Bar Stool</option>
-                <option value="Show Rack">Show Rack</option>
-                <option value="Study Desk">Study Desk</option>
+                <option value="chair">Chair</option>
+                <option value="table">Sofa</option>
+                <option value="desk">Desk</option>
               </select>
             </div>
 
             <div className="form-group mb-3">
+              <label htmlFor="price">Price</label>
               <input
+                id="price"
                 name="price"
                 type="number"
                 className="form-control"
                 placeholder="Enter your product price"
-                onChange={handleInputChange}
+                onChange={onMutate}
+                value={price}
               />
             </div>
 
             <div className="form-group mb-3">
-              <label for="description">Description</label>
+              <label htmlFor="images">Images</label>
+              <input
+                id="images"
+                name="images"
+                type="file"
+                className="form-control"
+                onChange={onMutate}
+                accept=".jpg,.png,.jpeg"
+                multiple
+                max="6"
+                required
+              />
+            </div>
+
+            <div className="form-group mb-3">
+              <label htmlFor="description">Description</label>
               <textarea
+                id="description"
                 className="form-control"
                 name="description"
                 rows="3"
-                onChange={handleInputChange}
+                onChange={onMutate}
+                value={description}
               ></textarea>
             </div>
 
             <div className="text-end">
               <Link
                 to="/admin/furniture"
-                className="btn btn-outline-primary me-2 px-4"
+                className="btn btn-outline-danger me-2 px-4"
               >
                 Cancel
               </Link>

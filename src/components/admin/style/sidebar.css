@@ -6,15 +6,38 @@
    left: 0;
    background-color: #333;
    padding-top: 20px;
-}
-.sidebar .link {
+   display: flex;
+   flex-direction: column;
+ }
+
+ .sidebar .border {
+   margin: 0 5%;
+  border: 1px solid #555 !important;
+ }
+ 
+ .sidebar .link {
    padding: 15px 25px;
    text-align: left;
    text-decoration: none;
    font-size: 18px;
    color: #fff;
    display: block;
-}
-.sidebar .link:hover {
+   font-size: 16px;
+ }
+ 
+ .sidebar .link:hover {
    background-color: #555;
-}
+ }
+ 
+ .sidebar .logout {
+   margin-top: auto;
+   padding: 15px 25px;
+   text-align: center;
+   text-decoration: none;
+   font-size: 18px;
+   /* color: #fff; */
+   display: block;
+   font-size: 16px;
+ }
+ 
+ 

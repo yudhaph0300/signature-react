@@ -8,6 +8,7 @@ import heroSearch from "../asset/search-furniture.png";
 import { collection, getDocs } from "@firebase/firestore";
 import { db } from "../firebase.config";
 import Spinner from "../components/Spinner";
+import { toast } from "react-toastify";
 
 function Furnitures() {
   const [furnitureData, setFurnitureData] = useState(null);
@@ -25,7 +26,7 @@ function Furnitures() {
         });
         setFurnitureData(data);
       } catch (error) {
-        console.error("Error fetching data:", error);
+        toast.error("Network Error");
       } finally {
         setLoading(false);
       }

@@ -18,6 +18,8 @@ function Sidebar() {
   };
   return (
     <div className="sidebar">
+      <h3 className="text-center text-white mb-4 mt-3 fw-bold">Signature</h3>
+      <div className="border"></div>
       <Link to="/admin" className="link">
         <div className="d-flex align-items-center">
           <FontAwesomeIcon icon={faTableColumns} className="me-2" />
@@ -31,10 +33,12 @@ function Sidebar() {
         </div>
       </Link>
       <Link to="/admin/settings" className="link">
-        <FontAwesomeIcon icon={faGear} className="me-2" />
-        Settings
+        <div className="d-flex align-items-center">
+          <FontAwesomeIcon icon={faGear} className="me-2" />
+          Settings
+        </div>
       </Link>
-      <div className="link btn btn-link" onClick={onLogout}>
+      <div className="logout btn btn-danger mx-3 mb-5" onClick={onLogout}>
         <FontAwesomeIcon icon={faSignOut} className="me-2" />
         Logout
       </div>

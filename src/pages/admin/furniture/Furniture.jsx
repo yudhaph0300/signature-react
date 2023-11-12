@@ -5,6 +5,7 @@ import { useEffect, useState } from "react";
 import { collection, getDocs } from "@firebase/firestore";
 import { db } from "../../../firebase.config";
 import Spinner from "../../../components/Spinner";
+import { toast } from "react-toastify";
 
 function Furniture() {
   const [furnitureData, setFurnitureData] = useState(null);
@@ -24,7 +25,7 @@ function Furniture() {
         });
         setFurnitureData(data);
       } catch (error) {
-        console.error(error);
+        toast.error("Network Error");
       } finally {
         setLoading(false);
       }

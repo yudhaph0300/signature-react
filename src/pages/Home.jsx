@@ -7,6 +7,7 @@ import SearchBar from "../components/SearchBar";
 import Spinner from "../components/Spinner";
 import { collection, getDocs } from "@firebase/firestore";
 import { db } from "../firebase.config";
+import { toast } from "react-toastify";
 
 function Home() {
   const [furnitureRec, setFurnitureRec] = useState(null);
@@ -27,7 +28,7 @@ function Home() {
         const randomFurniture = shuffledFurniture.slice(0, 4);
         setFurnitureRec(randomFurniture);
       } catch (error) {
-        console.log(error);
+        toast.error("Network Error");
       } finally {
         setLoading(false);
       }
