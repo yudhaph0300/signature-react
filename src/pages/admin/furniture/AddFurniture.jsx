@@ -4,7 +4,17 @@ import { Link, useNavigate } from "react-router-dom";
 import { getAuth, onAuthStateChanged } from "firebase/auth";
 import { useRef } from "react";
 import { useEffect } from "react";
+import {
+  getStorage,
+  ref,
+  uploadBytesResumable,
+  getDownloadURL,
+} from "firebase/storage";
+import { v4 as uuidv4 } from "uuid";
 import SpinnerFull from "../../../components/SpinnerFull";
+import { toast } from "react-toastify";
+import { addDoc, collection, serverTimestamp } from "@firebase/firestore";
+import { db } from "../../../firebase.config";
 
 const AddFurniture = () => {
   const [loading, setLoading] = useState(false);
@@ -36,6 +46,7 @@ const AddFurniture = () => {
     return () => {
       isMounted.current = false;
     };
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [isMounted]);
 
   if (loading) {
@@ -59,9 +70,82 @@ const AddFurniture = () => {
       }));
     }
   };
-  const onSubmit = (e) => {
+
+  const onSubmit = async (e) => {
     e.preventDefault();
-    console.log(formData);
+    setLoading(true);
+
+    if (images.length > 6) {
+      setLoading(false);
+      toast.error("Max 6 images");
+      return;
+    }
+
+    // Store image in database
+    const storageImage = async (image) => {
+      return new Promise((resolve, reject) => {
+        const storage = getStorage();
+        const fileName = `${auth.currentUser.uid}-${image.name}-${uuidv4()}`;
+
+        const storageRef = ref(storage, "images/" + fileName);
+
+        const uploadTask = uploadBytesResumable(storageRef, image);
+
+        uploadTask.on(
+          "state_changed",
+          (snapshot) => {
+            const progress =
+              (snapshot.bytesTransferred / snapshot.totalBytes) * 100;
+            console.log("Upload is " + progress + "% done");
+            switch (snapshot.state) {
+              case "paused":
+                console.log("Upload is paused");
+                break;
+              case "running":
+                console.log("Upload is running");
+                break;
+              default:
+                break;
+            }
+          },
+
+          (error) => {
+            reject(error);
+          },
+
+          () => {
+            // Handle successful uploads on complete
+            // For instance, get the download URL: https://firebasestorage.googleapis.com/...
+            getDownloadURL(uploadTask.snapshot.ref).then((downloadURL) => {
+              resolve(downloadURL);
+            });
+          }
+        );
+      });
+    };
+
+    const imageURL = await Promise.all(
+      [...images].map((image) => storageImage(image))
+    ).catch(() => {
+      setLoading(false);
+      toast.error("Images not uploaded");
+      return;
+    });
+
+    const formDataCopy = {
+      ...formData,
+      imageURL,
+      timestamp: serverTimestamp(),
+    };
+
+    delete formDataCopy.images;
+
+    // eslint-disable-next-line no-unused-vars
+    const docRef = await addDoc(collection(db, "furnitures"), formDataCopy);
+    // console.log(docRef);
+    setLoading(false);
+    toast.success("Furniture Added");
+    navigate(`/admin/furniture`);
   };
 
   return (
