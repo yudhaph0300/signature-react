@@ -2,7 +2,7 @@ import "../style/index.css";
 import Sidebar from "../../../components/admin/Sidebar";
 import { Link } from "react-router-dom";
 import { useEffect, useState } from "react";
-import { collection, getDocs } from "@firebase/firestore";
+import { collection, deleteDoc, doc, getDocs } from "@firebase/firestore";
 import { db } from "../../../firebase.config";
 import Spinner from "../../../components/Spinner";
 import { toast } from "react-toastify";
@@ -43,11 +43,22 @@ function Furniture() {
   const handleSearch = (searchInput) => {
     setSearch(searchInput);
     const filteredData = furnitureData.filter((furniture) =>
-      furniture.name.toLowerCase().includes(searchInput.toLowerCase())
+      furniture.data.name.toLowerCase().includes(searchInput.toLowerCase())
     );
     setResults(filteredData);
     if (searchInput === "") {
       setResults(null);
+    }
+  };
+
+  const onDelete = async (furnitureId) => {
+    if (window.confirm("Are you sure you want to delete?")) {
+      await deleteDoc(doc(db, "furnitures", furnitureId));
+      const updatedFurnitures = furnitureData.filter(
+        (furniture) => furniture.id !== furnitureId
+      );
+      setFurnitureData(updatedFurnitures);
+      toast.success("Successfully deleted furniture");
     }
   };
 
@@ -125,6 +136,7 @@ function Furniture() {
                           <button
                             type="button"
                             className="btn btn-danger btn-circle "
+                            onClick={() => onDelete(furniture.id)}
                           >
                             <FontAwesomeIcon icon={faTrash} />
                           </button>

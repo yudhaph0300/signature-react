@@ -9,6 +9,7 @@ import Footer from "../components/Footer";
 import { collection, getDocs } from "@firebase/firestore";
 import { db } from "../firebase.config";
 import Spinner from "../components/Spinner";
+import { toast } from "react-toastify";
 
 function FurnituresResult() {
   const { search } = useParams();
@@ -36,7 +37,7 @@ function FurnituresResult() {
 
         setResults(resultData);
       } catch (error) {
-        console.error("Error fetching data:", error);
+        toast.error("Error fetching data");
       } finally {
         setLoading(false);
       }

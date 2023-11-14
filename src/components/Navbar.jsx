@@ -4,7 +4,12 @@ import { useAuthStatus } from "../hooks/useAuthStatus";
 import Spinner from "./Spinner";
 
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import { faSignOut, faUser } from "@fortawesome/free-solid-svg-icons";
+import {
+  faRightToBracket,
+  faSignOut,
+  faTableColumns,
+  faUser,
+} from "@fortawesome/free-solid-svg-icons";
 
 function Navbar() {
   const navigate = useNavigate();
@@ -89,12 +94,18 @@ function Navbar() {
                 )}
                 {loggedIn && isAdmin && (
                   <>
-                    <li className="nav-item me-3">
+                    <li className="nav-item">
                       <Link
                         to="/admin"
                         className="btn btn-dark btn-login-navbar"
                       >
-                        Back to dashboard
+                        <div className="d-flex align-items-center">
+                          <FontAwesomeIcon
+                            icon={faTableColumns}
+                            className="me-2"
+                          />
+                          Back to dashboard
+                        </div>
                       </Link>
                     </li>
                   </>
@@ -104,73 +115,21 @@ function Navbar() {
                     <li className="nav-item me-3">
                       <Link
                         to="/login"
-                        className="btn btn-outline-primary btn-login-navbar"
+                        className="btn btn-primary btn-login-navbar"
                       >
-                        Login
-                      </Link>
-                    </li>
-                    <li className="nav-item">
-                      <Link
-                        to="/register"
-                        className="btn btn-primary btn-register-navbar"
-                      >
-                        Register
+                        <div className="d-flex align-items-center">
+                          <FontAwesomeIcon
+                            icon={faRightToBracket}
+                            className="me-2"
+                          />
+                          Login
+                        </div>
                       </Link>
                     </li>
                   </>
                 )}
               </>
             )}
-
-            {/* {loggedIn && !isAdmin && (
-              <>
-                <li className="nav-item me-3">
-                  <Link
-                    to="/profile"
-                    className="btn btn-success btn-register-navbar"
-                  >
-                    Profile
-                  </Link>
-                </li>
-                <li className="nav-item">
-                  <button
-                    onClick={onLogout}
-                    className="btn btn-danger btn-register-navbar"
-                  >
-                    Logout
-                  </button>
-                </li>
-              </>
-            )}
-            {loggedIn && isAdmin && (
-              <>
-                <li className="nav-item me-3">
-                  <Link to="/admin" className="btn btn-dark btn-login-navbar">
-                    Back to dashboard
-                  </Link>
-                </li>
-              </>
-            )}
-            {!loggedIn && (
-              <>
-                <li className="nav-item me-3">
-                  <Link
-                    to="/login"
-                    className="btn btn-outline-primary btn-login-navbar"
-                  >
-                    Login
-                  </Link>
-                </li>
-                <li className="nav-item">
-                  <Link
-                    to="/register"
-                    className="btn btn-primary btn-register-navbar"
-                  >
-                    Register
-                  </Link>
-                </li>
-              </>
-            )} */}
           </ul>
         </div>
       </div>

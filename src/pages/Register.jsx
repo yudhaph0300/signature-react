@@ -12,7 +12,7 @@ import { db } from "../firebase.config";
 
 // React
 import { useState } from "react";
-import { useNavigate } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import { toast } from "react-toastify";
 import OAuth from "../components/OAuth";
 
@@ -71,7 +71,23 @@ function Register() {
   return (
     <div className="login-form">
       <div className="container d-flex justify-content-center align-items-center h-100 mt-auto">
-        <div className="card p-3 shadow-lg" style={{ minWidth: "50%" }}>
+        <div
+          className="card p-3 shadow-lg"
+          style={{ minWidth: "50%", maxWidth: "90%" }}
+        >
+          <div className="card-body">
+            <h5 className="card-title fw-bold text-center">Important Note!</h5>
+            <p className="small mb-0">
+              Please make sure to read the <Link to="/readme">README</Link> page
+              before attempting to use the application. The README contains
+              essential information, guidelines, and instructions necessary for
+              a smooth experience and understanding of the application's
+              functionalities.
+            </p>
+          </div>
+
+          <hr className="border mx-3" />
+
           <div className="card-body">
             <p className="card-title fw-bold text-center">Create an account</p>
             <h3 className="mt-4 mb-0 fw-bold">
