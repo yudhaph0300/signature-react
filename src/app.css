@@ -10,3 +10,7 @@ body {
    z-index: 3;
 }
  
+.border-all {
+   border: 1px solid #f1f1f1 !important;
+ }
+ 

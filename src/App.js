@@ -26,6 +26,7 @@ import Profile from "./pages/Profile";
 import ForgotPassword from "./pages/ForgotPassword";
 import PrivateRoute from "./components/PrivateRoute";
 import PrivateRouteAdmin from "./components/PrivateRouteAdmin";
+import Detail from "./pages/admin/furniture/Detail";
 
 function App() {
   return (
@@ -50,6 +51,7 @@ function App() {
           <Route path="/admin" element={<PrivateRouteAdmin />}>
             <Route path="/admin" element={<Index />} />
             <Route path="/admin/furniture" element={<Furniture />} />
+            <Route path="/admin/furniture/:furnitureId" element={<Detail />} />
             <Route path="/admin/furniture/add" element={<AddFurniture />} />
             <Route
               path="/admin/furniture/edit-furniture"

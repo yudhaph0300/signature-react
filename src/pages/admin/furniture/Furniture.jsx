@@ -6,6 +6,8 @@ import { collection, getDocs } from "@firebase/firestore";
 import { db } from "../../../firebase.config";
 import Spinner from "../../../components/Spinner";
 import { toast } from "react-toastify";
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import { faInfo, faTrash } from "@fortawesome/free-solid-svg-icons";
 
 function Furniture() {
   const [furnitureData, setFurnitureData] = useState(null);
@@ -21,7 +23,7 @@ function Furniture() {
 
         let data = [];
         querySnap.forEach((doc) => {
-          data.push(doc.data());
+          data.push({ id: doc.id, data: doc.data() });
         });
         setFurnitureData(data);
       } catch (error) {
@@ -30,6 +32,8 @@ function Furniture() {
         setLoading(false);
       }
     };
+
+    console.log(furnitureData);
 
     if (!furnitureData) {
       fetchDataFurniture();
@@ -106,22 +110,23 @@ function Furniture() {
                     {(results || furnitureData).map((furniture, index) => (
                       <tr key={index}>
                         <td className="text-center">{index + 1}</td>
-                        <td>{furniture.name}</td>
-                        <td>{furniture.type}</td>
-                        <td>$ {furniture.price}</td>
+                        <td>{furniture.data.name}</td>
+                        <td>{furniture.data.type}</td>
+                        <td>$ {furniture.data.price}</td>
                         {/* <td>{furniture.rating}</td> */}
                         <td className="text-center">
                           <Link
-                            to={`/admin/furniture/edit/${furniture.id}`}
-                            className="btn btn-outline-info mr-2 rounded-pill px-4 me-2"
+                            to={`/admin/furniture/${furniture.id}`}
+                            className="btn btn-primary btn-circle me-2"
                           >
-                            Edit
+                            <FontAwesomeIcon icon={faInfo} />
                           </Link>
+
                           <button
                             type="button"
-                            className="btn btn-outline-danger rounded-pill px-4"
+                            className="btn btn-danger btn-circle "
                           >
-                            Delete
+                            <FontAwesomeIcon icon={faTrash} />
                           </button>
                         </td>
                       </tr>
