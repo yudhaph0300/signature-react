@@ -8,7 +8,7 @@ const Readme = () => {
       <Navbar />
 
       <div className="container my-5" style={{ padding: "0 15%" }}>
-        <div className="card p-4 mb-4" style={{ border: "0" }}>
+        <div className="card shadow-lg p-4 mb-4" style={{ border: "0" }}>
           <div className="card-body">
             <h3 className="card-title fw-bold mb-4">Functionality</h3>
 
@@ -19,7 +19,7 @@ const Readme = () => {
               include:
             </p>
             <p className="fw-bold">Completed:</p>
-            <ol>
+            <ul>
               <li>
                 Login: Enables admin to access the admin account and perform
                 CRUD (Create, Read, Update, Delete) operations on data.
@@ -44,13 +44,13 @@ const Readme = () => {
                 Delete Furniture Data: Allows the removal of unnecessary
                 furniture data from the system.
               </li>
-            </ol>
-            <p className="fw-bold">In Progress:</p>
-            <ol>
               <li>
                 Edit Furniture Data: Currently in development, allowing admins
                 to modify existing furniture data as required.
               </li>
+            </ul>
+            <p className="fw-bold">In Progress:</p>
+            <ul>
               <li>
                 Dashboard: Under development to present a concise overview of
                 system statistics or essential information.
@@ -59,14 +59,14 @@ const Readme = () => {
                 Settings: In the process of development to allow admins to
                 configure system settings.
               </li>
-            </ol>
+            </ul>
             <p className="fw-bold">Future Development:</p>
-            <ol>
+            <ul>
               <li>
                 Transactions: Planned for future development to enable admins to
                 confirm orders placed by customers before further processing.
               </li>
-            </ol>
+            </ul>
             <hr className="border mb-4" />
 
             <h5 className="fw-bold">Customer :</h5>
@@ -75,7 +75,7 @@ const Readme = () => {
               enhance their experience. The completed functionalities include:
             </p>
             <p className="fw-bold">Completed:</p>
-            <ol>
+            <ul>
               <li>
                 Register: Enables customers to create an account within the
                 system.
@@ -103,17 +103,17 @@ const Readme = () => {
                 Edit Profile: Allows customers to modify their profile
                 information.
               </li>
-            </ol>
+            </ul>
             <p className="fw-bold">In Progress:</p>
-            <ol>
+            <ul>
               <li>
                 View Furniture Details: Currently in development, enabling
                 customers to view detailed information about specific furniture
                 items.
               </li>
-            </ol>
+            </ul>
             <p className="fw-bold">Future Development:</p>
-            <ol>
+            <ul>
               <li>
                 Add Products to Cart: Planned for future development, allowing
                 customers to add products to their shopping cart for potential
@@ -124,11 +124,11 @@ const Readme = () => {
                 development, enabling customers to finalize transactions and
                 purchase selected products.
               </li>
-            </ol>
+            </ul>
           </div>
         </div>
 
-        <div className="card p-4 mb-4" style={{ border: "0" }}>
+        <div className="card shadow-lg p-4 mb-4" style={{ border: "0" }}>
           <div className="card-body">
             <h3 className="card-title fw-bold mb-4">Pages</h3>
 

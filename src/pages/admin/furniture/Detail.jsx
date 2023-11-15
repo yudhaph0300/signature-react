@@ -1,49 +1,189 @@
-import { doc, getDoc } from "@firebase/firestore";
-import { useEffect, useState } from "react";
-import { useParams } from "react-router-dom";
+import { useState, useEffect, useRef } from "react";
+import { getAuth, onAuthStateChanged } from "firebase/auth";
+import {
+  getStorage,
+  ref,
+  uploadBytesResumable,
+  getDownloadURL,
+} from "firebase/storage";
+import { doc, updateDoc, getDoc, serverTimestamp } from "firebase/firestore";
+import { useNavigate, useParams } from "react-router-dom";
+import { v4 as uuidv4 } from "uuid";
 import { db } from "../../../firebase.config";
+
 import SpinnerFull from "../../../components/SpinnerFull";
 import Sidebar from "../../../components/admin/Sidebar";
 
 import "../style/detail.css";
+import { toast } from "react-toastify";
 
 function Detail() {
+  const [loading, setLoading] = useState(false);
+  const [furniture] = useState(false);
+  const [imageURLS, setImageURLS] = useState([]);
   const [formData, setFormData] = useState({
     name: "",
     type: "",
     price: 0,
-    imageURL: {},
+    images: {},
     description: "",
   });
-  const [loading, setLoading] = useState(true);
+  const { name, type, price, images, description } = formData;
+
   const [edit, setEdit] = useState(false);
 
+  const auth = getAuth();
+  const navigate = useNavigate();
   const params = useParams();
+  const isMounted = useRef(true);
 
   useEffect(() => {
+    if (furniture && furniture.userRef !== auth.currentUser.uid) {
+      toast.error("You cant edit this furniture");
+      navigate("/admin/furniture");
+    }
+  });
+
+  useEffect(() => {
+    setLoading(true);
     const getDetail = async () => {
       const docRef = doc(db, "furnitures", params.furnitureId);
       const docSnap = await getDoc(docRef);
 
       if (docSnap.exists()) {
         setFormData(docSnap.data());
+        setImageURLS(docSnap.data().imageURL);
         setLoading(false);
+      } else {
+        navigate("/admin/furniture");
+        toast.error("Furniture doesnt exist");
       }
     };
 
     getDetail();
-  }, [params.furnitureId]);
+  }, [navigate, params.furnitureId]);
 
-  const { name, type, price, imageURL, description } = formData;
+  // Sets userRef to logged in user
+  useEffect(() => {
+    if (isMounted) {
+      onAuthStateChanged(auth, (user) => {
+        if (user) {
+          setFormData({ ...formData, userRef: user.uid });
+        } else {
+          navigate("/admin/furniture");
+        }
+      });
+    }
+
+    return () => {
+      isMounted.current = false;
+    };
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [isMounted]);
 
   console.log(formData);
 
   const onChange = (e) => {
-    const { name, value } = e.target;
-    setFormData({
-      ...formData,
-      [name]: value,
+    // Files
+    if (e.target.files) {
+      setFormData((prevState) => ({
+        ...prevState,
+        images: e.target.files,
+      }));
+    }
+
+    // Text/Number
+    if (!e.target.files) {
+      setFormData((prevState) => ({
+        ...prevState,
+        [e.target.id]: e.target.value,
+      }));
+    }
+  };
+
+  const onSubmit = async (e) => {
+    e.preventDefault();
+    setLoading(true);
+
+    if (typeof images === "object" && images !== null) {
+      const numberOfImages = Object.keys(images).length;
+
+      if (numberOfImages > 6) {
+        setLoading(false);
+        toast.error("Max 6 images");
+        return;
+      }
+    } else {
+      setLoading(false);
+      toast.error("Images are not properly set");
+      return;
+    }
+
+    // Store image in database
+    const storageImage = async (image) => {
+      return new Promise((resolve, reject) => {
+        const storage = getStorage();
+        const fileName = `${auth.currentUser.uid}-${image.name}-${uuidv4()}`;
+
+        const storageRef = ref(storage, "images/" + fileName);
+
+        const uploadTask = uploadBytesResumable(storageRef, image);
+
+        uploadTask.on(
+          "state_changed",
+          (snapshot) => {
+            const progress =
+              (snapshot.bytesTransferred / snapshot.totalBytes) * 100;
+            console.log("Upload is " + progress + "% done");
+            switch (snapshot.state) {
+              case "paused":
+                console.log("Upload is paused");
+                break;
+              case "running":
+                console.log("Upload is running");
+                break;
+              default:
+                break;
+            }
+          },
+
+          (error) => {
+            reject(error);
+          },
+
+          () => {
+            // Handle successful uploads on complete
+            // For instance, get the download URL: https://firebasestorage.googleapis.com/...
+            getDownloadURL(uploadTask.snapshot.ref).then((downloadURL) => {
+              resolve(downloadURL);
+            });
+          }
+        );
+      });
+    };
+
+    const imageURL = await Promise.all(
+      [...images].map((image) => storageImage(image))
+    ).catch(() => {
+      setLoading(false);
+      toast.error("Images not uploaded");
+      return;
     });
+
+    const formDataCopy = {
+      ...formData,
+      imageURL,
+      timestamp: serverTimestamp(),
+    };
+
+    delete formDataCopy.images;
+
+    // Update listing
+    const docRef = doc(db, "furnitures", params.furnitureId);
+    await updateDoc(docRef, formDataCopy);
+    setLoading(false);
+    toast.success("Furniture saved");
+    navigate("/admin/furniture");
   };
 
   return (
@@ -63,7 +203,7 @@ function Detail() {
                   <div className="col text-end">
                     <button
                       className={`btn ${
-                        edit ? "btn-danger me-2" : "btn-warning"
+                        edit ? "btn-danger" : "btn-warning"
                       } px-4`}
                       onClick={() => {
                         setEdit((prevState) => !prevState);
@@ -71,23 +211,44 @@ function Detail() {
                     >
                       {edit ? "Cancel" : "Edit"}
                     </button>
-                    {edit && (
-                      <button className="btn btn-success px-4">Save</button>
-                    )}
                   </div>
                 </div>
 
                 <div className="border-all mb-3"></div>
-                <div className="card-images">
-                  {imageURL.map((image, index) => (
-                    <div className="image-wrapper" key={index}>
-                      <img src={image} alt={name} />
-                    </div>
-                  ))}
-                </div>
 
-                <form action="" className="mt-3">
-                  <div className="form-group mb-2">
+                {!edit && (
+                  <div className="card-images">
+                    {imageURLS.map((image, index) => (
+                      <div className="image-wrapper" key={index}>
+                        <img src={image} alt={name} />
+                      </div>
+                    ))}
+                  </div>
+                )}
+
+                <form onSubmit={onSubmit} className="">
+                  {edit && (
+                    <>
+                      <label className="formLabel">Images</label>
+                      <p className="imagesInfo small">
+                        Images data will be reset. Please enter a maximum of 6
+                        images
+                      </p>
+                      <input
+                        className="formInputFile"
+                        type="file"
+                        id="images"
+                        name="images"
+                        onChange={onChange}
+                        max="6"
+                        accept=".jpg,.png,.jpeg"
+                        multiple
+                        required
+                      />
+                    </>
+                  )}
+
+                  <div className="form-group mt-3 mb-2">
                     <label htmlFor="name" className="small mb-1">
                       Name
                     </label>
@@ -151,6 +312,12 @@ function Detail() {
                       disabled={!edit}
                     ></textarea>
                   </div>
+
+                  {edit && (
+                    <button type="submit" className="btn btn-success px-4">
+                      Save
+                    </button>
+                  )}
                 </form>
               </div>
             </div>
