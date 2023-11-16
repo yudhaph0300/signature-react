@@ -9,6 +9,7 @@ import { collection, getDocs } from "@firebase/firestore";
 import { db } from "../firebase.config";
 import Spinner from "../components/Spinner";
 import { toast } from "react-toastify";
+import { useNavigate } from "react-router-dom";
 
 function Furnitures() {
   const [furnitureData, setFurnitureData] = useState(null);
@@ -22,7 +23,7 @@ function Furnitures() {
 
         let data = [];
         querySnap.forEach((doc) => {
-          data.push(doc.data());
+          data.push({ id: doc.id, data: doc.data() });
         });
         setFurnitureData(data);
       } catch (error) {
@@ -39,7 +40,11 @@ function Furnitures() {
 
   console.log(furnitureData);
 
-  const handleClick = () => {};
+  const navigate = useNavigate();
+
+  const handleClick = (FurnitureId) => {
+    navigate(`/furnitures/${FurnitureId}`);
+  };
 
   return (
     <>
@@ -70,19 +75,18 @@ function Furnitures() {
               <div className="row">
                 {furnitureData.map((furniture, index) => (
                   <div className="col-sm-12 col-md-4 col-lg-3 mt-4" key={index}>
-                    <div className="card card-furniture" onClick={handleClick}>
+                    <div
+                      className="card card-furniture"
+                      onClick={() => handleClick(furniture.id)}
+                    >
                       <div className="card-img-container">
-                        <div className="card-img-overlay">
-                          {/* <h5 className="card-title text-right w-100">
-                        *{furniture.rating}
-                      </h5> */}
-                        </div>
+                        <div className="card-img-overlay"></div>
                         <div className="card-img-wrapper">
                           <img
                             className="card-img-top"
-                            src={furniture.imageURL[0]}
+                            src={furniture.data.imageURL[0]}
                             height="200"
-                            alt={furniture.name}
+                            alt={furniture.data.name}
                             style={{
                               objectFit: "cover",
                             }}
@@ -90,9 +94,13 @@ function Furnitures() {
                         </div>
                       </div>
                       <div className="card-body">
-                        <p className="mb-1 fw-bold">{furniture.name}</p>
-                        <p className="mb-1 fs-small">Type: {furniture.type}</p>
-                        <p className="fs-small">Price: $ {furniture.price}</p>
+                        <p className="mb-1 fw-bold">{furniture.data.name}</p>
+                        <p className="mb-1 fs-small">
+                          Type: {furniture.data.type}
+                        </p>
+                        <p className="fs-small">
+                          Price: $ {furniture.data.price}
+                        </p>
                       </div>
                     </div>
                   </div>

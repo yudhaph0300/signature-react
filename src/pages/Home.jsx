@@ -8,6 +8,7 @@ import Spinner from "../components/Spinner";
 import { collection, getDocs } from "@firebase/firestore";
 import { db } from "../firebase.config";
 import { toast } from "react-toastify";
+import { useNavigate } from "react-router-dom";
 
 function Home() {
   const [furnitureRec, setFurnitureRec] = useState(null);
@@ -21,11 +22,12 @@ function Home() {
 
         let data = [];
         querySnap.forEach((doc) => {
-          data.push(doc.data());
+          data.push({ id: doc.id, data: doc.data() });
         });
 
         const shuffledFurniture = data.sort(() => 0.5 - Math.random());
         const randomFurniture = shuffledFurniture.slice(0, 4);
+
         setFurnitureRec(randomFurniture);
       } catch (error) {
         toast.error("Network Error");
@@ -41,7 +43,11 @@ function Home() {
 
   console.log(furnitureRec);
 
-  const handleClick = () => {};
+  const navigate = useNavigate();
+
+  const handleClick = (FurnitureId) => {
+    navigate(`/furnitures/${FurnitureId}`);
+  };
   return (
     <>
       <Navbar />
@@ -75,19 +81,18 @@ function Home() {
             <div className="row">
               {furnitureRec.map((furniture, index) => (
                 <div className="col-sm-12 col-md-4 col-lg-3" key={index}>
-                  <div className="card card-furniture" onClick={handleClick}>
+                  <div
+                    className="card card-furniture"
+                    onClick={() => handleClick(furniture.id)}
+                  >
                     <div className="card-img-container">
-                      <div className="card-img-overlay">
-                        {/* <h5 className="card-title text-right w-100">
-                          *{furniture.rating}
-                        </h5> */}
-                      </div>
+                      <div className="card-img-overlay"></div>
                       <div className="card-img-wrapper">
                         <img
                           className="card-img-top"
-                          src={furniture.imageURL[0]}
+                          src={furniture.data.imageURL[0]}
                           height="200"
-                          alt={furniture.name}
+                          alt={furniture.data.name}
                           style={{
                             objectFit: "cover",
                           }}
@@ -95,9 +100,13 @@ function Home() {
                       </div>
                     </div>
                     <div className="card-body">
-                      <p className="mb-1 fw-bold">{furniture.name}</p>
-                      <p className="mb-1 fs-small">Type: {furniture.type}</p>
-                      <p className="fs-small">Price: $ {furniture.price}</p>
+                      <p className="mb-1 fw-bold">{furniture.data.name}</p>
+                      <p className="mb-1 fs-small">
+                        Type: {furniture.data.type}
+                      </p>
+                      <p className="fs-small">
+                        Price: $ {furniture.data.price}
+                      </p>
                     </div>
                   </div>
                 </div>

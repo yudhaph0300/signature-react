@@ -1,6 +1,6 @@
 body {
    font-family: 'Inter', sans-serif !important;
-   background-color: #F8F9FB;
+   background-color: #F8F9FB !important;
 }
 
 .navbar-custom {

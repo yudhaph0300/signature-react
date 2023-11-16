@@ -75,9 +75,9 @@ const AddFurniture = () => {
     e.preventDefault();
     setLoading(true);
 
-    if (images.length > 6) {
+    if (images.length > 4) {
       setLoading(false);
-      toast.error("Max 6 images");
+      toast.error("Max 4 images");
       return;
     }
 
@@ -209,7 +209,7 @@ const AddFurniture = () => {
                 onChange={onMutate}
                 accept=".jpg,.png,.jpeg"
                 multiple
-                max="6"
+                max="4"
                 required
               />
             </div>

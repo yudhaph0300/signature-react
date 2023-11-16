@@ -103,14 +103,15 @@ const Readme = () => {
                 Edit Profile: Allows customers to modify their profile
                 information.
               </li>
-            </ul>
-            <p className="fw-bold">In Progress:</p>
-            <ul>
               <li>
                 View Furniture Details: Currently in development, enabling
                 customers to view detailed information about specific furniture
                 items.
               </li>
+            </ul>
+            <p className="fw-bold">In Progress:</p>
+            <ul>
+              <li>-</li>
             </ul>
             <p className="fw-bold">Future Development:</p>
             <ul>

@@ -1,9 +1,4 @@
-.card {
-   border: none;
-   overflow: hidden;
- }
- 
- .card-images {
+.card-images-detail {
    display: grid;
    grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
    gap: 8px;
@@ -21,5 +16,3 @@
    height: 100%;
    object-fit: cover;
  }
- 
- 

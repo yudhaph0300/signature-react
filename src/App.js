@@ -1,6 +1,8 @@
 import "./app.css";
 import "./components/style.css";
 import "bootstrap/dist/css/bootstrap.min.css";
+import "slick-carousel/slick/slick.css";
+import "slick-carousel/slick/slick-theme.css";
 
 import { ToastContainer } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
@@ -27,6 +29,7 @@ import ForgotPassword from "./pages/ForgotPassword";
 import PrivateRoute from "./components/PrivateRoute";
 import PrivateRouteAdmin from "./components/PrivateRouteAdmin";
 import Detail from "./pages/admin/furniture/Detail";
+import FurnitureDetails from "./pages/FurnitureDetails";
 
 function App() {
   return (
@@ -38,6 +41,10 @@ function App() {
           <Route path="/login" exact element={<Login />} />
           <Route path="/about" element={<About />} />
           <Route path="/furnitures" element={<Furnitures />} />
+          <Route
+            path="/furnitures/:furnitureId"
+            element={<FurnitureDetails />}
+          />
           <Route path="/readme" element={<Readme />} />
           <Route
             path="/furnitures/result/:search"

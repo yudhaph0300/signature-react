@@ -108,9 +108,9 @@ function Detail() {
     if (typeof images === "object" && images !== null) {
       const numberOfImages = Object.keys(images).length;
 
-      if (numberOfImages > 6) {
+      if (numberOfImages > 4) {
         setLoading(false);
-        toast.error("Max 6 images");
+        toast.error("Max 4 images");
         return;
       }
     } else {
@@ -231,7 +231,7 @@ function Detail() {
                     <>
                       <label className="formLabel">Images</label>
                       <p className="imagesInfo small">
-                        Images data will be reset. Please enter a maximum of 6
+                        Images data will be reset. Please enter a maximum of 4
                         images
                       </p>
                       <input
@@ -240,7 +240,7 @@ function Detail() {
                         id="images"
                         name="images"
                         onChange={onChange}
-                        max="6"
+                        max="4"
                         accept=".jpg,.png,.jpeg"
                         multiple
                         required
