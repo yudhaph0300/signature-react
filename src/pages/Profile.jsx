@@ -1,8 +1,8 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
 
 // Firebase
 import { getAuth, updateProfile } from "firebase/auth";
-import { doc, updateDoc } from "firebase/firestore";
+import { doc, getDoc, updateDoc } from "firebase/firestore";
 import { db } from "../firebase.config";
 import { toast } from "react-toastify";
 import Navbar from "../components/Navbar";
@@ -12,18 +12,37 @@ import { useNavigate } from "react-router-dom";
 
 function Profile() {
   const auth = getAuth();
+  const navigate = useNavigate();
 
   const { checkingStatus, isAdmin } = useAuthStatus();
   const [changeDetails, setChangeDetails] = useState(false);
   const [formData, setFormData] = useState({
     name: auth.currentUser.displayName,
     email: auth.currentUser.email,
+    address: "",
+    telp: "",
   });
 
-  const navigate = useNavigate();
+  useEffect(() => {
+    const getDetail = async () => {
+      const docRef = doc(db, "users", auth.currentUser.uid);
+      const docSnap = await getDoc(docRef);
+
+      if (docSnap.exists()) {
+        setFormData(docSnap.data());
+      } else {
+        navigate("/login");
+        toast.error("User not logged in");
+      }
+    };
+
+    getDetail();
+  }, [auth.currentUser.uid, navigate]);
+
   if (isAdmin) return navigate("/admin");
 
-  const { name, email } = formData;
+  const { name, email, address, telp } = formData;
+  console.log(formData);
 
   const onChange = (e) => {
     const { name, value } = e.target;
@@ -35,18 +54,18 @@ function Profile() {
 
   const onSubmit = async () => {
     try {
-      if (auth.currentUser.displayName !== name) {
-        // Update Display
-        await updateProfile(auth.currentUser, {
-          displayName: name,
-        });
+      // Update Display
+      await updateProfile(auth.currentUser, {
+        displayName: name,
+      });
 
-        // Update firestore
-        const userRef = doc(db, "users", auth.currentUser.uid);
-        await updateDoc(userRef, {
-          name,
-        });
-      }
+      // Update firestore
+      const userRef = doc(db, "users", auth.currentUser.uid);
+      await updateDoc(userRef, {
+        name,
+        address,
+        telp,
+      });
     } catch (error) {
       toast.error("Could not update profile details");
     }
@@ -58,24 +77,28 @@ function Profile() {
         <div className="card p-3 shadow-lg">
           <div className="card-body">
             {checkingStatus && <Spinner />}
-            <div style={{ float: "left" }}>
-              <p className="card-title fw-bold">Personal profile</p>
-            </div>
-            <div style={{ float: "right" }}>
-              <button
-                className="btn btn-link fw-bold"
-                style={{ textDecoration: "none" }}
-                onClick={() => {
-                  setChangeDetails((prevState) => !prevState);
-                }}
-              >
-                {changeDetails ? "Cancel" : "Change"}
-              </button>
+            <div className="row">
+              <div className="col text-start">
+                <p className="card-title fw-bold">Personal profile</p>
+              </div>
+              <div className="col text-end">
+                <button
+                  className="btn btn-link fw-bold"
+                  style={{ textDecoration: "none" }}
+                  onClick={() => {
+                    setChangeDetails((prevState) => !prevState);
+                  }}
+                >
+                  {changeDetails ? "Cancel" : "Change"}
+                </button>
+              </div>
             </div>
 
             <form onSubmit={onSubmit}>
-              <div className="form-group">
-                <label htmlFor="name" className="small"></label>
+              <div className="form-group mb-2">
+                <label htmlFor="name" className="small mb-1">
+                  Name
+                </label>
                 <input
                   type="text"
                   className="form-control small p-3"
@@ -87,8 +110,43 @@ function Profile() {
                   onChange={onChange}
                 />
               </div>
-              <div className="form-group">
-                <label htmlFor="email" className="small"></label>
+
+              <div className="form-group mb-2">
+                <label htmlFor="telp" className="small mb-1">
+                  Telephone
+                </label>
+                <input
+                  type="number"
+                  className="form-control small p-3"
+                  id="telp"
+                  name="telp"
+                  placeholder="Enter your telp"
+                  value={telp}
+                  disabled={!changeDetails}
+                  onChange={onChange}
+                />
+              </div>
+
+              <div className="form-group mb-2">
+                <label htmlFor="address" className="small mb-1">
+                  Address
+                </label>
+                <input
+                  type="text"
+                  className="form-control small p-3"
+                  id="address"
+                  name="address"
+                  placeholder="Enter your address"
+                  value={address}
+                  disabled={!changeDetails}
+                  onChange={onChange}
+                />
+              </div>
+
+              <div className="form-group mb-2">
+                <label htmlFor="email" className="small mb-1">
+                  Email
+                </label>
                 <input
                   type="text"
                   className="form-control small p-3"

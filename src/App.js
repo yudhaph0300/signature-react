@@ -17,7 +17,6 @@ import Index from "./pages/admin/Index";
 import Furniture from "./pages/admin/furniture/Furniture";
 import Settings from "./pages/admin/Settings";
 import AddFurniture from "./pages/admin/furniture/AddFurniture";
-import EditFurniture from "./pages/admin/furniture/EditFurniture";
 
 import FurnituresResult from "./pages/FurnituresResult";
 import Readme from "./pages/Readme";
@@ -60,10 +59,6 @@ function App() {
             <Route path="/admin/furniture" element={<Furniture />} />
             <Route path="/admin/furniture/:furnitureId" element={<Detail />} />
             <Route path="/admin/furniture/add" element={<AddFurniture />} />
-            <Route
-              path="/admin/furniture/edit-furniture"
-              element={<EditFurniture />}
-            />
             <Route path="/admin/settings" element={<Settings />} />
           </Route>
 
