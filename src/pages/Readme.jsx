@@ -108,23 +108,23 @@ const Readme = () => {
                 customers to view detailed information about specific furniture
                 items.
               </li>
-            </ul>
-            <p className="fw-bold">In Progress:</p>
-            <ul>
-              <li>-</li>
-            </ul>
-            <p className="fw-bold">Future Development:</p>
-            <ul>
               <li>
                 Add Products to Cart: Planned for future development, allowing
                 customers to add products to their shopping cart for potential
                 purchase.
               </li>
+            </ul>
+            <p className="fw-bold">In Progress:</p>
+            <ul>
               <li>
                 Complete Product Purchase Transactions: Planned for future
                 development, enabling customers to finalize transactions and
                 purchase selected products.
               </li>
+            </ul>
+            <p className="fw-bold">Future Development:</p>
+            <ul>
+              <li>-</li>
             </ul>
           </div>
         </div>

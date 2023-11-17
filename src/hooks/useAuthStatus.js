@@ -6,7 +6,8 @@ import { db } from "../firebase.config";
 export const useAuthStatus = () => {
   const [loggedIn, setLoggedIn] = useState(false);
   const [checkingStatus, setCheckingStatus] = useState(true);
-  const [isAdmin, setIsAdmin] = useState(false); // Tambahkan state untuk isAdmin
+  const [isAdmin, setIsAdmin] = useState(false);
+  const [userId, setUserId] = useState(null);
   const isMounted = useRef(true);
 
   useEffect(() => {
@@ -14,6 +15,7 @@ export const useAuthStatus = () => {
     const unsubscribe = onAuthStateChanged(auth, async (user) => {
       if (user) {
         setLoggedIn(true);
+        setUserId(user.uid);
 
         // Dapatkan data pengguna dari Firestore
         const userDoc = await getDoc(doc(db, "users", user.uid));
@@ -32,5 +34,5 @@ export const useAuthStatus = () => {
     };
   }, []);
 
-  return { loggedIn, checkingStatus, isAdmin };
+  return { loggedIn, checkingStatus, isAdmin, userId };
 };

@@ -1,25 +1,17 @@
-import { getAuth } from "firebase/auth";
-import { Link, useNavigate } from "react-router-dom";
+import { Link } from "react-router-dom";
 import { useAuthStatus } from "../hooks/useAuthStatus";
 import Spinner from "./Spinner";
 
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import {
+  faCartShopping,
   faRightToBracket,
-  faSignOut,
   faTableColumns,
   faUser,
 } from "@fortawesome/free-solid-svg-icons";
 
 function Navbar() {
-  const navigate = useNavigate();
-  const auth = getAuth();
   const { loggedIn, checkingStatus, isAdmin } = useAuthStatus();
-
-  const onLogout = () => {
-    auth.signOut();
-    navigate("/login");
-  };
 
   return (
     <nav className="navbar navbar-expand-lg navbar-dark navbar-custom py-3">
@@ -80,15 +72,18 @@ function Navbar() {
                       </Link>
                     </li>
                     <li className="nav-item">
-                      <button
-                        onClick={onLogout}
-                        className="btn btn-danger btn-register-navbar"
+                      <Link
+                        to="/cart"
+                        className="btn btn-primary btn-register-navbar"
                       >
                         <div className="d-flex align-items-center">
-                          <FontAwesomeIcon icon={faSignOut} className="me-2" />
-                          Logout
+                          <FontAwesomeIcon
+                            icon={faCartShopping}
+                            className="me-2"
+                          />
+                          Cart
                         </div>
-                      </button>
+                      </Link>
                     </li>
                   </>
                 )}

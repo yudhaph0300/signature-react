@@ -9,6 +9,8 @@ import Navbar from "../components/Navbar";
 import { useAuthStatus } from "../hooks/useAuthStatus";
 import Spinner from "../components/Spinner";
 import { useNavigate } from "react-router-dom";
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import { faSignOut } from "@fortawesome/free-solid-svg-icons";
 
 function Profile() {
   const auth = getAuth();
@@ -43,6 +45,11 @@ function Profile() {
 
   const { name, email, address, telp } = formData;
   console.log(formData);
+
+  const onLogout = () => {
+    auth.signOut();
+    navigate("/login");
+  };
 
   const onChange = (e) => {
     const { name, value } = e.target;
@@ -83,13 +90,13 @@ function Profile() {
               </div>
               <div className="col text-end">
                 <button
-                  className="btn btn-link fw-bold"
-                  style={{ textDecoration: "none" }}
-                  onClick={() => {
-                    setChangeDetails((prevState) => !prevState);
-                  }}
+                  onClick={onLogout}
+                  className="btn btn-danger btn-register-navbar"
                 >
-                  {changeDetails ? "Cancel" : "Change"}
+                  <div className="d-flex align-items-center">
+                    <FontAwesomeIcon icon={faSignOut} className="me-2" />
+                    Logout
+                  </div>
                 </button>
               </div>
             </div>
@@ -161,7 +168,7 @@ function Profile() {
             </form>
             {changeDetails && (
               <button
-                className="btn btn-success mt-3 btn-lg w-100"
+                className="btn btn-success mt-3  w-100"
                 onClick={() => {
                   onSubmit();
                   setChangeDetails((prevState) => !prevState);
@@ -170,6 +177,18 @@ function Profile() {
                 Save
               </button>
             )}
+
+            <button
+              className={`btn ${
+                changeDetails ? "btn-danger" : "btn-warning"
+              } fw-bold w-100 mt-3 `}
+              style={{ textDecoration: "none" }}
+              onClick={() => {
+                setChangeDetails((prevState) => !prevState);
+              }}
+            >
+              {changeDetails ? "Cancel" : "Change"}
+            </button>
           </div>
         </div>
       </div>

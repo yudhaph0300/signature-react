@@ -29,6 +29,7 @@ import PrivateRoute from "./components/PrivateRoute";
 import PrivateRouteAdmin from "./components/PrivateRouteAdmin";
 import Detail from "./pages/admin/furniture/Detail";
 import FurnitureDetails from "./pages/FurnitureDetails";
+import Cart from "./pages/Cart";
 
 function App() {
   return (
@@ -49,6 +50,7 @@ function App() {
             path="/furnitures/result/:search"
             element={<FurnituresResult />}
           />
+          <Route path="/cart" element={<Cart />} />
           <Route path="/profile" element={<PrivateRoute />}>
             <Route path="/profile" element={<Profile />} />
           </Route>
