@@ -2,6 +2,7 @@ import "../style/cart.css";
 import Footer from "../components/Footer";
 import Navbar from "../components/Navbar";
 import { useEffect, useState } from "react";
+import { v4 as uuidv4 } from "uuid";
 import { doc, getDoc, setDoc } from "@firebase/firestore";
 import { db } from "../firebase.config";
 import { useAuthStatus } from "../hooks/useAuthStatus";
@@ -14,7 +15,8 @@ function Cart() {
   const [carts, setCarts] = useState(null);
   const [loading, setLoading] = useState(true);
 
-  const { userId } = useAuthStatus();
+  const { userId, dataUser } = useAuthStatus();
+  console.log("Data user: ", dataUser);
 
   const getDetail = async () => {
     const docRef = doc(db, "carts", userId);
@@ -113,6 +115,36 @@ function Cart() {
     return total + cartItem.total;
   }, 0);
 
+  const createTransaction = async () => {
+    setLoading(true);
+    if (carts?.furnitures.length >= 1 && dataUser) {
+      try {
+        const transactionData = {
+          furnitures: carts.furnitures,
+          totalAmount: totalAmount,
+          status: "Waiting for payment",
+          creatorId: userId,
+          dataUser: dataUser,
+        };
+
+        const docRef = doc(db, "transactions", uuidv4());
+        await setDoc(docRef, transactionData);
+
+        toast.success("Transaction created successfully!");
+        setCarts(null);
+
+        // Kosongkan furnitures di Firestore
+        const cartDocRef = doc(db, "carts", userId);
+        await setDoc(cartDocRef, { furnitures: [] }, { merge: true });
+      } catch (error) {
+        toast.error("Error creating transaction");
+        // console.error("Error creating transaction: ", error);
+      } finally {
+        setLoading(false);
+      }
+    }
+  };
+
   return (
     <>
       <Navbar />
@@ -206,6 +238,7 @@ function Cart() {
               </div>
               <div className="col-md-6">
                 <button
+                  onClick={createTransaction}
                   className="btn btn-primary w-100"
                   disabled={carts?.furnitures.length === 0}
                 >

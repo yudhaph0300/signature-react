@@ -7,6 +7,7 @@ import {
   faGear,
   faSignOut,
   faChair,
+  faArrowRightArrowLeft,
 } from "@fortawesome/free-solid-svg-icons";
 
 function Sidebar() {
@@ -29,7 +30,13 @@ function Sidebar() {
       <Link to="/admin/furniture" className="link">
         <div className="d-flex align-items-center">
           <FontAwesomeIcon icon={faChair} className="me-2" />
-          Furniture
+          Furnitures
+        </div>
+      </Link>
+      <Link to="/admin/transactions" className="link">
+        <div className="d-flex align-items-center">
+          <FontAwesomeIcon icon={faArrowRightArrowLeft} className="me-2" />
+          Transactions
         </div>
       </Link>
       <Link to="/admin/settings" className="link">

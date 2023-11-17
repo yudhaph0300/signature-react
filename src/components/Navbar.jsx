@@ -62,17 +62,6 @@ function Navbar() {
                   <>
                     <li className="nav-item me-3">
                       <Link
-                        to="/profile"
-                        className="btn btn-success btn-register-navbar"
-                      >
-                        <div className="d-flex align-items-center">
-                          <FontAwesomeIcon icon={faUser} className="me-2" />
-                          Profile
-                        </div>
-                      </Link>
-                    </li>
-                    <li className="nav-item">
-                      <Link
                         to="/cart"
                         className="btn btn-primary btn-register-navbar"
                       >
@@ -82,6 +71,17 @@ function Navbar() {
                             className="me-2"
                           />
                           Cart
+                        </div>
+                      </Link>
+                    </li>
+                    <li className="nav-item">
+                      <Link
+                        to="/profile"
+                        className="btn btn-success btn-register-navbar"
+                      >
+                        <div className="d-flex align-items-center">
+                          <FontAwesomeIcon icon={faUser} className="me-2" />
+                          Profile
                         </div>
                       </Link>
                     </li>

@@ -63,8 +63,8 @@ function Furnitures() {
       </div>
       <div className="container mt-5">
         <p className="fw-bold">
-          Showing {loading ? "0" : "12"} of {loading ? "0" : "60"} pieces of
-          furniture
+          Showing {loading ? "0" : furnitureData.length} of{" "}
+          {loading ? "0" : furnitureData.length} pieces of furniture
         </p>
         {loading ? (
           <Spinner />

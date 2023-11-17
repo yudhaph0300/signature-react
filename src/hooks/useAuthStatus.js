@@ -8,6 +8,7 @@ export const useAuthStatus = () => {
   const [checkingStatus, setCheckingStatus] = useState(true);
   const [isAdmin, setIsAdmin] = useState(false);
   const [userId, setUserId] = useState(null);
+  const [dataUser, setDataUser] = useState(null);
   const isMounted = useRef(true);
 
   useEffect(() => {
@@ -22,6 +23,7 @@ export const useAuthStatus = () => {
 
         if (userDoc.exists()) {
           const userData = userDoc.data();
+          setDataUser(userData);
           setIsAdmin(userData.isAdmin || false); // Set isAdmin berdasarkan data pengguna
         }
       }
@@ -34,5 +36,5 @@ export const useAuthStatus = () => {
     };
   }, []);
 
-  return { loggedIn, checkingStatus, isAdmin, userId };
+  return { loggedIn, checkingStatus, isAdmin, userId, dataUser };
 };

@@ -30,6 +30,8 @@ import PrivateRouteAdmin from "./components/PrivateRouteAdmin";
 import Detail from "./pages/admin/furniture/Detail";
 import FurnitureDetails from "./pages/FurnitureDetails";
 import Cart from "./pages/Cart";
+import Transactions from "./pages/admin/transactions";
+import HistoryTransactions from "./pages/HistoryTransactions";
 
 function App() {
   return (
@@ -51,6 +53,10 @@ function App() {
             element={<FurnituresResult />}
           />
           <Route path="/cart" element={<Cart />} />
+          <Route
+            path="/history-transactions"
+            element={<HistoryTransactions />}
+          />
           <Route path="/profile" element={<PrivateRoute />}>
             <Route path="/profile" element={<Profile />} />
           </Route>
@@ -61,6 +67,7 @@ function App() {
             <Route path="/admin/furniture" element={<Furniture />} />
             <Route path="/admin/furniture/:furnitureId" element={<Detail />} />
             <Route path="/admin/furniture/add" element={<AddFurniture />} />
+            <Route path="/admin/transactions" element={<Transactions />} />
             <Route path="/admin/settings" element={<Settings />} />
           </Route>
 
