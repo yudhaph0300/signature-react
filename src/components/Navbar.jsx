@@ -5,6 +5,7 @@ import Spinner from "./Spinner";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import {
   faCartShopping,
+  faHistory,
   faRightToBracket,
   faTableColumns,
   faUser,
@@ -60,6 +61,17 @@ function Navbar() {
               <>
                 {loggedIn && !isAdmin && (
                   <>
+                    <li className="nav-item me-3">
+                      <Link
+                        to="/history-transactions"
+                        className="btn btn-warning btn-register-navbar"
+                      >
+                        <div className="d-flex align-items-center">
+                          <FontAwesomeIcon icon={faHistory} className="me-2" />
+                          History
+                        </div>
+                      </Link>
+                    </li>
                     <li className="nav-item me-3">
                       <Link
                         to="/cart"
