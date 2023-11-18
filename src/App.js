@@ -17,6 +17,10 @@ import Index from "./pages/admin/Index";
 import Furniture from "./pages/admin/furniture/Furniture";
 import Settings from "./pages/admin/Settings";
 import AddFurniture from "./pages/admin/furniture/AddFurniture";
+import PrivateRouteAdmin from "./components/PrivateRouteAdmin";
+import Detail from "./pages/admin/furniture/Detail";
+import Transactions from "./pages/admin/transactions";
+import DetailTransaction from "./pages/admin/transactions/Detail";
 
 import FurnituresResult from "./pages/FurnituresResult";
 import Readme from "./pages/Readme";
@@ -26,11 +30,8 @@ import NotFound from "./pages/NotFound";
 import Profile from "./pages/Profile";
 import ForgotPassword from "./pages/ForgotPassword";
 import PrivateRoute from "./components/PrivateRoute";
-import PrivateRouteAdmin from "./components/PrivateRouteAdmin";
-import Detail from "./pages/admin/furniture/Detail";
 import FurnitureDetails from "./pages/FurnitureDetails";
 import Cart from "./pages/Cart";
-import Transactions from "./pages/admin/transactions";
 import HistoryTransactions from "./pages/HistoryTransactions";
 
 function App() {
@@ -52,11 +53,14 @@ function App() {
             path="/furnitures/result/:search"
             element={<FurnituresResult />}
           />
-          <Route path="/cart" element={<Cart />} />
+
           <Route
             path="/history-transactions"
             element={<HistoryTransactions />}
           />
+          <Route path="/cart" element={<PrivateRoute />}>
+            <Route path="/cart" element={<Cart />} />
+          </Route>
           <Route path="/profile" element={<PrivateRoute />}>
             <Route path="/profile" element={<Profile />} />
           </Route>
@@ -68,6 +72,10 @@ function App() {
             <Route path="/admin/furniture/:furnitureId" element={<Detail />} />
             <Route path="/admin/furniture/add" element={<AddFurniture />} />
             <Route path="/admin/transactions" element={<Transactions />} />
+            <Route
+              path="/admin/transactions/:transactionId"
+              element={<DetailTransaction />}
+            />
             <Route path="/admin/settings" element={<Settings />} />
           </Route>
 

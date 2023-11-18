@@ -53,30 +53,37 @@ function Profile() {
 
   const onChange = (e) => {
     const { name, value } = e.target;
-    setFormData({
-      ...formData,
+    setFormData((prevData) => ({
+      ...prevData,
       [name]: value,
-    });
+    }));
   };
 
-  const onSubmit = async () => {
+  const onSubmit = async (e) => {
+    e.preventDefault();
     try {
-      // Update Display
+      // Update Display Name in Authentication
       await updateProfile(auth.currentUser, {
         displayName: name,
       });
 
+      // Pastikan bahwa nilai yang akan disimpan tidak kosong atau undefined
+      const dataToUpdate = {
+        name,
+        address: address || "", // Menghindari nilai undefined pada address
+        telp: telp || "", // Menghindari nilai undefined pada telp
+      };
+
       // Update firestore
       const userRef = doc(db, "users", auth.currentUser.uid);
-      await updateDoc(userRef, {
-        name,
-        address,
-        telp,
-      });
+      await updateDoc(userRef, dataToUpdate);
+      toast.success("Profile details updated successfully!");
     } catch (error) {
       toast.error("Could not update profile details");
+      console.log(error);
     }
   };
+
   return (
     <>
       <Navbar />
@@ -169,8 +176,8 @@ function Profile() {
             {changeDetails && (
               <button
                 className="btn btn-success mt-3  w-100"
-                onClick={() => {
-                  onSubmit();
+                onClick={(e) => {
+                  onSubmit(e);
                   setChangeDetails((prevState) => !prevState);
                 }}
               >

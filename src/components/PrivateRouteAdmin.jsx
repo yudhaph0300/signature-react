@@ -10,7 +10,6 @@ const PrivateRouteAdmin = () => {
     return <SpinnerFull />;
   }
 
-  // Cek apakah pengguna masuk dan memiliki peran yang sesuai (isAdmin jika role adalah "admin")
   if (loggedIn && isAdmin) {
     return <Outlet />;
   } else {

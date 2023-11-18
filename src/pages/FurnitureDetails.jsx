@@ -70,7 +70,7 @@ function FurnitureDetails() {
           await setDoc(cartRef, { furnitures }, { merge: true });
           toast.success("Furniture added to cart");
 
-          navigate("/cart");
+          navigate("/furnitures");
         } else {
           toast.error("Furniture already exists in cart");
         }
@@ -139,6 +139,7 @@ function FurnitureDetails() {
                     )
                   }
                   className="btn btn-primary mt-3 w-100 d-flex align-items-center justify-content-center"
+                  disabled={!userId}
                 >
                   <FontAwesomeIcon icon={faCartShopping} className="me-2" />
                   Add to cart

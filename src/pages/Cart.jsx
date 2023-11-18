@@ -10,12 +10,14 @@ import Spinner from "../components/Spinner";
 import { toast } from "react-toastify";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faMinus, faPlus } from "@fortawesome/free-solid-svg-icons";
+import { useNavigate } from "react-router-dom";
 
 function Cart() {
   const [carts, setCarts] = useState(null);
   const [loading, setLoading] = useState(true);
+  const [totalAmount, setTotalAmount] = useState(0);
 
-  const { userId, dataUser } = useAuthStatus();
+  const { userId, dataUser, checkingStatus } = useAuthStatus();
   console.log("Data user: ", dataUser);
 
   const getDetail = async () => {
@@ -23,13 +25,21 @@ function Cart() {
     const docSnap = await getDoc(docRef);
 
     if (docSnap.exists()) {
-      setCarts(docSnap.data());
+      const cartData = docSnap.data();
+      setCarts(cartData);
+      const newTotalAmount = cartData?.furnitures.reduce(
+        (total, cartItem) => total + cartItem.total,
+        0
+      );
+      setTotalAmount(newTotalAmount);
       setLoading(false);
     } else {
       await createCartIfNotExists(userId);
       await getDetail();
     }
   };
+
+  console.log(carts);
 
   const createCartIfNotExists = async (userId) => {
     try {
@@ -111,12 +121,16 @@ function Cart() {
     }
   };
 
-  const totalAmount = carts?.furnitures.reduce((total, cartItem) => {
-    return total + cartItem.total;
-  }, 0);
-
+  const navigate = useNavigate();
   const createTransaction = async () => {
     setLoading(true);
+    if (!dataUser?.address || !dataUser.telp) {
+      return (
+        navigate("/profile"),
+        toast.error("Please update your profile"),
+        setLoading(false)
+      );
+    }
     if (carts?.furnitures.length >= 1 && dataUser) {
       try {
         const transactionData = {
@@ -140,6 +154,7 @@ function Cart() {
         toast.error("Error creating transaction");
         // console.error("Error creating transaction: ", error);
       } finally {
+        getDetail();
         setLoading(false);
       }
     }

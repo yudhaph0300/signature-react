@@ -3,14 +3,22 @@ import Sidebar from "../../../components/admin/Sidebar";
 import { db } from "../../../firebase.config";
 import { collection, getDocs } from "@firebase/firestore";
 import { useAuthStatus } from "../../../hooks/useAuthStatus";
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import { faInfo } from "@fortawesome/free-solid-svg-icons";
+import Spinner from "../../../components/Spinner";
+import { Link } from "react-router-dom";
 
 export default function Index() {
-  const [transactions, setTransactions] = useState([]);
+  const [transactions, setTransactions] = useState(null);
+  const [loading, setLoading] = useState(false);
+
   const { isAdmin } = useAuthStatus();
+
   console.log(isAdmin);
 
   useEffect(() => {
     const fetchTransactions = async () => {
+      setLoading(true);
       try {
         const transactions = collection(db, "transactions");
         const querySnap = await getDocs(transactions);
@@ -21,27 +29,72 @@ export default function Index() {
         });
 
         setTransactions(data);
+        setLoading(false);
       } catch (error) {
+        setLoading(false);
         console.error("Error fetching transactions:", error);
       }
     };
 
-    fetchTransactions();
-  }, []);
+    if (!transactions) {
+      fetchTransactions();
+    }
+  }, [transactions]);
+  console.log(transactions);
 
   return (
     <>
       <Sidebar />
       <div className="content">
-        <h1>Transactions</h1>
-        <ul>
-          {transactions.map((transaction) => (
-            <li key={transaction.id}>
-              <p>ID: {transaction.id}</p>
-              <p>Status: {transaction.data.status}</p>
-            </li>
-          ))}
-        </ul>
+        <div className="card shadow-lg p-3">
+          <div className="card-body">
+            <div className="card-title">
+              <h3>Transactions</h3>
+            </div>
+          </div>
+          {loading && <Spinner />}
+          {!loading && transactions && (
+            <div className="table-responsive">
+              <table className="table table-hover ">
+                <thead className="thead-light">
+                  <tr>
+                    <th className="text-center">No</th>
+                    <th>Name</th>
+                    <th>Total Amount</th>
+                    <th>Status</th>
+                    <th className="text-center">Action</th>
+                  </tr>
+                </thead>
+                <tbody>
+                  {transactions.length > 0 ? (
+                    transactions.map((transaction, index) => (
+                      <tr>
+                        <td>{index + 1}</td>
+                        <td>{transaction.data.dataUser.name}</td>
+                        <td>$ {transaction.data.totalAmount}</td>
+                        <td>{transaction.data.status}</td>
+                        <td className="text-center">
+                          <Link
+                            to={`/admin/transactions/${transaction.id}`}
+                            className="btn btn-primary btn-circle me-2"
+                          >
+                            <FontAwesomeIcon icon={faInfo} />
+                          </Link>
+                        </td>
+                      </tr>
+                    ))
+                  ) : (
+                    <tr>
+                      <td colSpan={"5"} className="text-center">
+                        Transaction data is empty
+                      </td>
+                    </tr>
+                  )}
+                </tbody>
+              </table>
+            </div>
+          )}
+        </div>
       </div>
     </>
   );

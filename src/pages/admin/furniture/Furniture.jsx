@@ -124,7 +124,6 @@ function Furniture() {
                         <td>{furniture.data.name}</td>
                         <td>{furniture.data.type}</td>
                         <td>$ {furniture.data.price}</td>
-                        {/* <td>{furniture.rating}</td> */}
                         <td className="text-center">
                           <Link
                             to={`/admin/furniture/${furniture.id}`}

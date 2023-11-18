@@ -48,6 +48,10 @@ const Readme = () => {
                 Edit Furniture Data: Currently in development, allowing admins
                 to modify existing furniture data as required.
               </li>
+              <li>
+                Transactions: Planned for future development to enable admins to
+                confirm orders placed by customers before further processing.
+              </li>
             </ul>
             <p className="fw-bold">In Progress:</p>
             <ul>
@@ -62,10 +66,7 @@ const Readme = () => {
             </ul>
             <p className="fw-bold">Future Development:</p>
             <ul>
-              <li>
-                Transactions: Planned for future development to enable admins to
-                confirm orders placed by customers before further processing.
-              </li>
+              <li>-</li>
             </ul>
             <hr className="border mb-4" />
 
