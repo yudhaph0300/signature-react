@@ -38,8 +38,6 @@ function Furnitures() {
     }
   }, [furnitureData]);
 
-  console.log(furnitureData);
-
   const navigate = useNavigate();
 
   const handleClick = (FurnitureId) => {

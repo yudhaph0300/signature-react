@@ -18,7 +18,6 @@ function Cart() {
   const [totalAmount, setTotalAmount] = useState(0);
 
   const { userId, dataUser, checkingStatus } = useAuthStatus();
-  console.log("Data user: ", dataUser);
 
   const getDetail = async () => {
     const docRef = doc(db, "carts", userId);
@@ -39,8 +38,6 @@ function Cart() {
     }
   };
 
-  console.log(carts);
-
   const createCartIfNotExists = async (userId) => {
     try {
       const cartRef = doc(db, "carts", userId);
@@ -59,8 +56,6 @@ function Cart() {
     }
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [userId]);
-
-  console.log(carts);
 
   const deleteCartItem = async (userId, furnitureId) => {
     if (window.confirm("Are you sure you want to delete?")) {
@@ -87,7 +82,7 @@ function Cart() {
         toast.success("Successfully deleted furniture from carts");
       }
     } else {
-      console.log("Cart does not exist for user:", userId);
+      toast.error("Cart does not exist for user:", userId);
     }
   };
 
@@ -117,7 +112,7 @@ function Cart() {
       await setDoc(docRef, { furnitures: updatedFurnitures }, { merge: true });
       getDetail(); // Memperbarui data keranjang setelah perubahan
     } else {
-      console.log("Cart does not exist for user:", userId);
+      toast.error("Cart does not exist for user:", userId);
     }
   };
 

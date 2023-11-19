@@ -12,10 +12,6 @@ export default function Index() {
   const [transactions, setTransactions] = useState(null);
   const [loading, setLoading] = useState(false);
 
-  const { isAdmin } = useAuthStatus();
-
-  console.log(isAdmin);
-
   useEffect(() => {
     const fetchTransactions = async () => {
       setLoading(true);
@@ -40,7 +36,6 @@ export default function Index() {
       fetchTransactions();
     }
   }, [transactions]);
-  console.log(transactions);
 
   return (
     <>

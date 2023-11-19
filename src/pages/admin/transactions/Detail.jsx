@@ -40,8 +40,6 @@ export default function Detail() {
     getDetail();
   }, [navigate, params.furnitureId, params.transactionId]);
 
-  console.log(formData);
-
   const onChange = (e) => {
     // Text/Number
     if (!e.target.files) {

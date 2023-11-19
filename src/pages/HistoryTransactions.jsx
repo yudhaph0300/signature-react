@@ -8,6 +8,7 @@ import Spinner from "../components/Spinner";
 import { Link } from "react-router-dom";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faInfo } from "@fortawesome/free-solid-svg-icons";
+import { toast } from "react-toastify";
 
 export default function HistoryTransactions() {
   const [historyTransaction, setHistoryTransaction] = useState(null);
@@ -28,7 +29,7 @@ export default function HistoryTransactions() {
 
       setHistoryTransaction(data);
     } catch (error) {
-      console.log(error);
+      toast.error("Failed to get data");
     } finally {
       setLoading(false);
     }
@@ -42,7 +43,6 @@ export default function HistoryTransactions() {
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [historyTransaction, userId]);
 
-  console.log(historyTransaction);
   return (
     <>
       <Navbar />
@@ -74,7 +74,7 @@ export default function HistoryTransactions() {
                     <td>{item.data.status}</td>
                     <td>
                       <Link
-                        to={`#`}
+                        to={`/history-transactions/${item.id}`}
                         className="btn btn-primary btn-circle me-2"
                       >
                         <FontAwesomeIcon icon={faInfo} />

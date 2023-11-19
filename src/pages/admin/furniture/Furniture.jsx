@@ -33,8 +33,6 @@ function Furniture() {
       }
     };
 
-    console.log(furnitureData);
-
     if (!furnitureData) {
       fetchDataFurniture();
     }

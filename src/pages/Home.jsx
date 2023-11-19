@@ -41,8 +41,6 @@ function Home() {
     }
   }, [furnitureRec]);
 
-  console.log(furnitureRec);
-
   const navigate = useNavigate();
 
   const handleClick = (FurnitureId) => {

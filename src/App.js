@@ -33,6 +33,7 @@ import PrivateRoute from "./components/PrivateRoute";
 import FurnitureDetails from "./pages/FurnitureDetails";
 import Cart from "./pages/Cart";
 import HistoryTransactions from "./pages/HistoryTransactions";
+import HistoryDetail from "./pages/HistoryDetail";
 
 function App() {
   return (
@@ -57,6 +58,10 @@ function App() {
           <Route
             path="/history-transactions"
             element={<HistoryTransactions />}
+          />
+          <Route
+            path="/history-transactions/:transactionId"
+            element={<HistoryDetail />}
           />
           <Route path="/cart" element={<PrivateRoute />}>
             <Route path="/cart" element={<Cart />} />

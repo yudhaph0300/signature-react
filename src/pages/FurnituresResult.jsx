@@ -46,8 +46,6 @@ function FurnituresResult() {
     fetchDataResult();
   }, [search]);
 
-  console.log(results);
-
   return (
     <>
       <Navbar />

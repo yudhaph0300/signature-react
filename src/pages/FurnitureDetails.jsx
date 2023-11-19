@@ -37,8 +37,6 @@ function FurnitureDetails() {
     }
   }, [furnitureDetails, navigate, params.furnitureId]);
 
-  console.log(furnitureDetails);
-
   const addFurnitureToCart = async (
     userId,
     furnitureId,

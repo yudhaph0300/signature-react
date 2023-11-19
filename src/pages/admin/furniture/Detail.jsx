@@ -81,8 +81,6 @@ function Detail() {
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [isMounted]);
 
-  console.log(formData);
-
   const onChange = (e) => {
     // Files
     if (e.target.files) {

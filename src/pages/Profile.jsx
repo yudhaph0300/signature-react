@@ -44,7 +44,6 @@ function Profile() {
   if (isAdmin) return navigate("/admin");
 
   const { name, email, address, telp } = formData;
-  console.log(formData);
 
   const onLogout = () => {
     auth.signOut();
@@ -80,7 +79,6 @@ function Profile() {
       toast.success("Profile details updated successfully!");
     } catch (error) {
       toast.error("Could not update profile details");
-      console.log(error);
     }
   };
 

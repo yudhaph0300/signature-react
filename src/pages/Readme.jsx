@@ -119,10 +119,11 @@ const Readme = () => {
                 development, enabling customers to finalize transactions and
                 purchase selected products.
               </li>
+              <li>Make a history transactions</li>
             </ul>
             <p className="fw-bold">In Progress:</p>
             <ul>
-              <li>Make a history transactions</li>
+              <li>-</li>
             </ul>
             <p className="fw-bold">Future Development:</p>
             <ul>
