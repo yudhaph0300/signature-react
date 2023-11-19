@@ -210,6 +210,9 @@ const Readme = () => {
                 instructions available on each page and perform actions in the
                 context of your system.
               </li>
+              <li>
+                If there is a bug, please report it to WhatsApp 083833735915
+              </li>
             </ul>
           </div>
         </div>
