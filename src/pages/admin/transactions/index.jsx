@@ -2,7 +2,6 @@ import { useEffect, useState } from "react";
 import Sidebar from "../../../components/admin/Sidebar";
 import { db } from "../../../firebase.config";
 import { collection, getDocs } from "@firebase/firestore";
-import { useAuthStatus } from "../../../hooks/useAuthStatus";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faInfo } from "@fortawesome/free-solid-svg-icons";
 import Spinner from "../../../components/Spinner";

@@ -17,7 +17,7 @@ function Cart() {
   const [loading, setLoading] = useState(true);
   const [totalAmount, setTotalAmount] = useState(0);
 
-  const { userId, dataUser, checkingStatus } = useAuthStatus();
+  const { userId, dataUser } = useAuthStatus();
 
   const getDetail = async () => {
     const docRef = doc(db, "carts", userId);
