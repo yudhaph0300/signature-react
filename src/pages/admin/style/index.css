@@ -5,6 +5,12 @@
    padding: 20px;
 }
 
+.content-header {
+   margin-left: 250px;
+   margin-right: 0px;
+   padding: 0px;
+}
+
 .btn-circle {
    display: inline-flex;
    width: 35px;

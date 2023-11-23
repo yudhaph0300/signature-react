@@ -68,7 +68,7 @@ export default function Detail() {
   };
   return (
     <>
-      <Sidebar />
+      <Sidebar nav={"transactions"} />
       <div className="content">
         {loading ? (
           <SpinnerFull />

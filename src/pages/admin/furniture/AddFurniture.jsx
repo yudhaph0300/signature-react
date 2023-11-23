@@ -149,7 +149,7 @@ const AddFurniture = () => {
 
   return (
     <div>
-      <Sidebar />
+      <Sidebar nav={"furnitures"} />
       <div className="content">
         <div className="card shadow border-0 p-4">
           <h3 className="mb-4 fw-bold">Create new furniture</h3>

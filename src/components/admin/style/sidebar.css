@@ -28,6 +28,9 @@
  .sidebar .link:hover {
    background-color: #555;
  }
+ .sidebar .link.active {
+   background-color: #555;
+ }
  
  .sidebar .logout {
    margin-top: auto;

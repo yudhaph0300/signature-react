@@ -186,7 +186,7 @@ function Detail() {
 
   return (
     <div>
-      <Sidebar />
+      <Sidebar nav={"furnitures"} />
       <div className="content">
         {loading ? (
           <SpinnerFull />

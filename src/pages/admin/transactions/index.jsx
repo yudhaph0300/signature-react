@@ -6,6 +6,7 @@ import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faInfo } from "@fortawesome/free-solid-svg-icons";
 import Spinner from "../../../components/Spinner";
 import { Link } from "react-router-dom";
+import Header from "../../../components/admin/Header";
 
 export default function Index() {
   const [transactions, setTransactions] = useState(null);
@@ -38,7 +39,10 @@ export default function Index() {
 
   return (
     <>
-      <Sidebar />
+      <Sidebar nav={"transactions"} />
+      <div className="content-header">
+        <Header title="Data Transaction" />
+      </div>
       <div className="content">
         <div className="card shadow-lg p-3">
           <div className="card-body">

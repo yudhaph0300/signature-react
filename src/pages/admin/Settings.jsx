@@ -4,7 +4,7 @@ import Sidebar from "../../components/admin/Sidebar";
 function Settings() {
   return (
     <div>
-      <Sidebar />
+      <Sidebar nav={"settings"} />
       <div className="content">
         <h1>Settings</h1>
         <p>

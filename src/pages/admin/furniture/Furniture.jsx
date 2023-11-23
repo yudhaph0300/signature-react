@@ -8,6 +8,7 @@ import Spinner from "../../../components/Spinner";
 import { toast } from "react-toastify";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faInfo, faTrash } from "@fortawesome/free-solid-svg-icons";
+import Header from "../../../components/admin/Header";
 
 function Furniture() {
   const [furnitureData, setFurnitureData] = useState(null);
@@ -62,7 +63,10 @@ function Furniture() {
 
   return (
     <div>
-      <Sidebar />
+      <Sidebar nav={"furnitures"} />
+      <div className="content-header">
+        <Header title="Data Furniture" />
+      </div>
       <div className="content">
         <div className="card shadow border-0 p-3">
           <div className="card-body">
