@@ -55,7 +55,7 @@ function Cart() {
       getDetail();
     }
     // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [userId]);
+  }, [userId, totalAmount]);
 
   const deleteCartItem = async (userId, furnitureId) => {
     if (window.confirm("Are you sure you want to delete?")) {
@@ -131,7 +131,7 @@ function Cart() {
         const transactionData = {
           furnitures: carts.furnitures,
           totalAmount: totalAmount,
-          status: "Waiting for payment",
+          status: "waiting",
           creatorId: userId,
           dataUser: dataUser,
         };

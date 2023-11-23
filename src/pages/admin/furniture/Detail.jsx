@@ -274,9 +274,9 @@ function Detail() {
                       value={type}
                       disabled={!edit}
                     >
-                      <option value="chair">Chair</option>
-                      <option value="table">Sofa</option>
-                      <option value="desk">Desk</option>
+                      <option value="Chair">Chair</option>
+                      <option value="Sofa">Sofa</option>
+                      <option value="Desk">Desk</option>
                     </select>
                   </div>
 

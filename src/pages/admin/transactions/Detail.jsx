@@ -110,9 +110,7 @@ export default function Detail() {
                       value={status}
                       disabled={!edit}
                     >
-                      <option value="waiting for payment">
-                        Waiting for payment
-                      </option>
+                      <option value="waiting">Waiting</option>
                       <option value="pending">Pending</option>
                       <option value="shipped">Shipped</option>
                       <option value="delivered">Delivered</option>

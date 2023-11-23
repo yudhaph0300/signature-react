@@ -60,7 +60,7 @@ function Index() {
     if (transactions) {
       // Inisialisasi objek untuk menyimpan jumlah status transaksi
       const statusCount = {
-        "waiting for payment": 0,
+        waiting: 0,
         pending: 0,
         shipped: 0,
         delivered: 0,

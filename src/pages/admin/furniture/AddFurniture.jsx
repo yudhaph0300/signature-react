@@ -180,6 +180,7 @@ const AddFurniture = () => {
                 onChange={onMutate}
                 value={type}
               >
+                <option selected>Select Type</option>
                 <option value="Chair">Chair</option>
                 <option value="Sofa">Sofa</option>
                 <option value="Desk">Desk</option>
